@@ -1,0 +1,13 @@
+.pokemonList {
+  display: grid;
+  row-gap: 5rem;
+  column-gap: 2rem;
+  width: 100%;
+}
+
+@media screen and (min-width: 31.25em) {
+  .pokemonList {
+    grid-template-columns: repeat(2, 1fr);
+
+  }
+}

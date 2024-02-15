@@ -1,0 +1,115 @@
+.card {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 5px;
+  position: relative;
+}
+
+.sprite {
+  width: 65%;
+  bottom: 8rem;
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+  /* position: relative; */
+  /* bottom: 90px; */
+  /* margin-bottom: 6rem; */
+  /* top: 6rem; */
+}
+
+.info {
+  padding-top: 6rem;
+}
+
+.name {
+  text-transform: capitalize;
+  margin-block: 0.75rem;
+}
+
+.types {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.types li {
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  font-weight: 600;
+  /* Pill shape = border-radius needs to be greater than the height */
+  border-radius: 10000px;
+}
+
+.card.grass {
+  background: color-mix(in srgb, var(--grass) 25%, transparent);
+}
+
+.card.poison {
+  background: color-mix(in srgb, var(--poison) 25%, transparent);
+}
+
+.card.fire {
+  background: color-mix(in srgb, var(--fire) 25%, transparent);
+}
+
+.card.water {
+  background: color-mix(in srgb, var(--water) 25%, transparent);
+}
+
+.card.electric {
+  background: color-mix(in srgb, var(--electric) 25%, transparent);
+}
+
+.card.bug {
+  background: color-mix(in srgb, var(--bug) 25%, transparent);
+}
+
+.card.ice {
+  background: color-mix(in srgb, var(--ice) 25%, transparent);
+}
+
+.card.fighting {
+  background: color-mix(in srgb, var(--fighting) 25%, transparent);
+}
+
+.card.ground {
+  background: color-mix(in srgb, var(--ground) 25%, transparent);
+}
+
+.card.flying {
+  background: color-mix(in srgb, var(--flying) 25%, transparent);
+}
+
+.card.psychic {
+  background: color-mix(in srgb, var(--psychic) 25%, transparent);
+}
+
+.card.rock {
+  background: color-mix(in srgb, var(--rock) 25%, transparent);
+}
+
+.card.ghost {
+  background: color-mix(in srgb, var(--ghost) 25%, transparent);
+}
+
+.card.dragon {
+  background: color-mix(in srgb, var(--dragon) 25%, transparent);
+}
+
+.card.dark {
+  background: color-mix(in srgb, var(--dark) 25%, transparent);
+}
+
+.card.steel {
+  background: color-mix(in srgb, var(--steel) 25%, transparent);
+}
+
+.card.fairy {
+  background: color-mix(in srgb, var(--fairy) 25%, transparent);
+}
+
+.card.normal {
+  background: color-mix(in srgb, var(--normal) 25%, transparent);
+}
