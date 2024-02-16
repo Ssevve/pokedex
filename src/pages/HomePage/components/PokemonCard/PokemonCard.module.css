@@ -1,6 +1,5 @@
 .card {
   min-width: 227.5px;
-  max-width: 300px;
   width: 100%;
   border-radius: 1rem;
   padding: 1.5rem;
@@ -21,6 +20,7 @@
 
 .sprite {
   width: 65%;
+  max-width: 200px;
   bottom: 8rem;
   position: absolute;
   left: 50%;
@@ -42,7 +42,6 @@
 .types {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
