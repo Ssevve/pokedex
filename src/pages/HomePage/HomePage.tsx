@@ -1,4 +1,4 @@
-import { PokeballLoader } from '@/components/PokeballLoader';
+import { PokeballLoader } from '@/pages/HomePage/components/PokeballLoader';
 import { usePokemons } from '@/hooks/usePokemons';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -18,7 +18,7 @@ export function HomePage() {
   }, [isInView, fetchNextPage]);
 
   return (
-    <main>
+    <main className={styles.container}>
       <ul className={styles.list}>
         {pokemonList.map(({ name, types, sprite, id }, i) => {
           const isLastPokemon = i === pokemonList.length - 1;
@@ -30,11 +30,7 @@ export function HomePage() {
           );
         })}
       </ul>
-      {isLoadingPokemons && (
-        <div className={styles.loader}>
-          <PokeballLoader />
-        </div>
-      )}
+      {isLoadingPokemons && <PokeballLoader />}
     </main>
   );
 }

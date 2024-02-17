@@ -1,3 +1,11 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+  padding-bottom: 2rem;
+}
+
 .list {
   display: grid;
   row-gap: 5rem;
@@ -5,8 +13,6 @@
   width: 100%;
   padding: 6rem 2rem 2rem 2rem;
   align-items: center;
-  max-width: 1750px;
-  margin: 0 auto;
 }
 
 .list li {
@@ -15,11 +21,6 @@
   justify-content: center;
 }
 
-.loader {
-  width: max-content;
-  margin: 0 auto;
-  padding-bottom: 2rem;
-}
 
 /* 35.5em * 16 = 500px */
 @media screen and (min-width: 35.5em) {
@@ -32,12 +33,5 @@
 @media screen and (min-width: 67.8125em) {
   .list {
     grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* 84.375em * 16 = 1350px */
-@media screen and (min-width: 84.375em) {
-  .list {
-    grid-template-columns: repeat(5, 1fr);
   }
 }

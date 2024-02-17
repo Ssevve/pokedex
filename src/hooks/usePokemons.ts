@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
-const POKEMONS_PER_PAGE = 20;
+const POKEMONS_PER_PAGE = 16;
 
 const pokemonsPageSchema = z.object({
   next: z.string().url().nullable(),

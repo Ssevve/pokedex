@@ -8,9 +8,12 @@
   width: 3rem;
   aspect-ratio: 1;
   animation: spin 1000ms infinite linear;
+  pointer-events: none;
+  user-select: none;
 }
 
 .text {
+  font-size: 1.2rem;
   font-weight: 500;
 }
 

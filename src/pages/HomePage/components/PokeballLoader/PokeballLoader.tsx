@@ -5,7 +5,7 @@ export function PokeballLoader() {
   return (
     <div className={styles.wrapper} role="status">
       <img className={styles.pokeball} src={pokeballImage} aria-hidden />
-      <p className={styles.text}>Loading pokemons...</p>
+      <p className={styles.text}>Loading...</p>
     </div>
   );
 }
