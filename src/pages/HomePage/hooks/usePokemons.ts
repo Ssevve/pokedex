@@ -38,8 +38,6 @@ const pokemonSchema = z
     ...rest,
   }));
 
-export type Pokemon = z.infer<typeof pokemonSchema>;
-
 async function fetchPokemons({ pageParam = 0 }) {
   const pokemonPageResponse = await fetch(
     `https://pokeapi.co/api/v2/pokemon?limit=${POKEMONS_PER_PAGE}&offset=${pageParam}`,
