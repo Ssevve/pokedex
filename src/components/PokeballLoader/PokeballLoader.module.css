@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.pokeball {
+  width: 3rem;
+  aspect-ratio: 1;
+  animation: spin 1000ms infinite linear;
+}
+
+.text {
+  font-weight: 600;
+}
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+
+  25% {
+    rotate: 30deg;
+  }
+
+  50% {
+    rotate: 180deg;
+  }
+
+  75% {
+    rotate: 280deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}

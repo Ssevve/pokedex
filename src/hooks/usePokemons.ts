@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
-const POKEMON_PER_PAGE = 20;
+const POKEMONS_PER_PAGE = 20;
 
 const pokemonsPageSchema = z.object({
   next: z.string().url().nullable(),
@@ -42,7 +42,7 @@ export type Pokemon = z.infer<typeof pokemonSchema>;
 
 async function fetchPokemons({ pageParam = 0 }) {
   const pokemonPageResponse = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${POKEMON_PER_PAGE}&offset=${pageParam}`,
+    `https://pokeapi.co/api/v2/pokemon?limit=${POKEMONS_PER_PAGE}&offset=${pageParam}`,
   );
 
   if (!pokemonPageResponse.ok) {
@@ -72,10 +72,10 @@ async function fetchPokemons({ pageParam = 0 }) {
 export function usePokemons() {
   return useInfiniteQuery({
     initialPageParam: 0,
-    queryKey: ['pokemon'],
+    queryKey: ['pokemons'],
     queryFn: fetchPokemons,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.next ? allPages.length * POKEMON_PER_PAGE : undefined;
+      return lastPage?.next ? allPages.length * POKEMONS_PER_PAGE : undefined;
     },
   });
 }
