@@ -51,25 +51,17 @@ async function fetchPokemons({ pageParam = 0 }) {
 
   const pokemonsPageData = pokemonsPageSchema.parse(await pokemonPageResponse.json());
 
-  const detailedPokemonsResponses = await Promise.allSettled(
+  const detailedPokemons = await Promise.all(
     pokemonsPageData.results.map(async ({ url, name }) => {
       const detailsResponse = await fetch(url);
 
       if (!detailsResponse.ok) {
-        console.log(`Failed to fetch detailed data for pokemon: ${name}.`);
+        throw Error(`Failed to fetch detailed data for pokemon: ${name}.`);
       }
 
-      return await detailsResponse.json();
+      return pokemonSchema.parse(await detailsResponse.json());
     }),
   );
-
-  const detailedPokemons = detailedPokemonsResponses
-    .filter((result): result is PromiseFulfilledResult<Pokemon> => result.status === 'fulfilled')
-    .map((res) => pokemonSchema.parse(res.value));
-
-  if (detailedPokemons.length === 0) {
-    throw Error('Failed to fetch detailed pokemons data.');
-  }
 
   return {
     next: pokemonsPageData.next,
