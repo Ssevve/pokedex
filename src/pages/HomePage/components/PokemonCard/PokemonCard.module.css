@@ -113,6 +113,10 @@
   background: color-mix(in srgb, var(--fighting) 25%, transparent);
 }
 
+.card.fighting:hover {
+  border-color: var(--fighting);
+}
+
 .card.ground {
   background: color-mix(in srgb, var(--ground) 25%, transparent);
 }
@@ -134,7 +138,7 @@
 }
 
 .card.psychic:hover {
-  border-color: var(--fire);
+  border-color: var(--psychic);
 }
 
 .card.rock {
