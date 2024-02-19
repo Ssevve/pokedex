@@ -1,9 +1,9 @@
-import { fetchPokemonFlavorTextByName } from '@/services/pokeAPI/fetchPokemonFlavorTextByName';
+import { fetchPokemonFlavorText } from '@/services/pokeAPI';
 import { useQuery } from '@tanstack/react-query';
 
-export function usePokemonFlavorText(name: string) {
+export function usePokemonFlavorText(pokemon: string) {
   return useQuery({
-    queryKey: ['pokemon-flavor-text', name],
-    queryFn: () => fetchPokemonFlavorTextByName(name),
+    queryKey: ['pokemon-flavor-text', pokemon],
+    queryFn: () => fetchPokemonFlavorText(pokemon),
   });
 }

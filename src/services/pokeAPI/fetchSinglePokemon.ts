@@ -40,7 +40,7 @@ export const pokemonSchema = z
     ...rest,
   }));
 
-// Name can also be a pokemon ID.
-export async function fetchPokemonByName(name: string) {
-  return pokemonSchema.parse(await pokeAPI(`/pokemon/${name}`));
+// Pokemon param can be a Pokemon ID or a Pokemon name.
+export async function fetchSinglePokemon(pokemon: string) {
+  return pokemonSchema.parse(await pokeAPI(`/pokemon/${pokemon}`));
 }

@@ -1,7 +1,7 @@
 import { POKEMONS_PER_PAGE } from '@/constants';
 import { z } from 'zod';
 import { pokeAPI } from './client';
-import { fetchPokemonByName } from '.';
+import { fetchSinglePokemon } from '.';
 
 const pokemonsPageSchema = z.object({
   next: z.string().url().nullable(),
@@ -19,7 +19,7 @@ export async function fetchPokemons({ pageParam = 0 }) {
 
   const pokemons = await Promise.all(
     pokemonsPage.results.map(async ({ name }) => {
-      return fetchPokemonByName(name);
+      return fetchSinglePokemon(name);
     }),
   );
 

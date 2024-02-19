@@ -1,9 +1,9 @@
-import { fetchPokemonByName } from '@/services/pokeAPI';
+import { fetchSinglePokemon } from '@/services/pokeAPI';
 import { useQuery } from '@tanstack/react-query';
 
-export function usePokemon(name: string) {
+export function usePokemon(pokemon: string) {
   return useQuery({
-    queryKey: ['pokemon', name],
-    queryFn: () => fetchPokemonByName(name),
+    queryKey: ['pokemon', pokemon],
+    queryFn: () => fetchSinglePokemon(pokemon),
   });
 }

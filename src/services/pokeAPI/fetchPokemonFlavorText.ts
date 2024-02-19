@@ -43,7 +43,7 @@ const flavorTextResponseSchema = z
   })
   .transform(({ flavor_text_entries }) => getRandomFlavorText(flavor_text_entries));
 
-// Name can also be a pokemon ID.
-export async function fetchPokemonFlavorTextByName(name: string) {
-  return flavorTextResponseSchema.parse(await pokeAPI(`/pokemon-species/${name}`));
+// Pokemon param can be a Pokemon ID or a Pokemon name.
+export async function fetchPokemonFlavorText(pokemon: string) {
+  return flavorTextResponseSchema.parse(await pokeAPI(`/pokemon-species/${pokemon}`));
 }
