@@ -1,0 +1,65 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+  padding: 1rem;
+}
+
+.header {
+  display: grid;
+  row-gap: 1rem;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  align-items: baseline;
+}
+
+.index {
+  font-size: 1.2rem;
+}
+
+.name {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.spriteWrapper {
+  max-width: 250px;
+  aspect-ratio: 1;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.sprite {
+  position: relative;
+  filter: var(--pokemon-sprite-filter);
+}
+
+.spriteBackground {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  border-radius: 50%;
+}
+
+.types {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.types li {
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--off-white);
+  /* Pill shape = border-radius needs to be greater than the height */
+  border-radius: 10000px;
+}

@@ -1,3 +1,4 @@
+import { padPokemonId } from '@/utils';
 import styles from './PokemonCard.module.css';
 import clsx from 'clsx';
 
@@ -8,21 +9,17 @@ interface PokemonCardProps {
   id: number;
 }
 
-function padId(id: number) {
-  return id.toString().padStart(3, '0');
-}
-
 export function PokemonCard({ name, sprite, types, id }: PokemonCardProps) {
   const mainType = types[0];
   return (
-    <div className={clsx(styles.card, styles[mainType])}>
+    <div className={clsx(styles.card, `bg-${mainType}-transparent`)}>
       <img className={styles.sprite} src={sprite} alt={name} />
       <div className={styles.info}>
-        <span>#{padId(id)}</span>
+        <span>#{padPokemonId(id)}</span>
         <h2 className={styles.name}>{name}</h2>
         <ul className={styles.types}>
           {types.map((type) => (
-            <li key={type} className={type}>
+            <li key={type} className={`bg-${type}`}>
               {type}
             </li>
           ))}

@@ -25,7 +25,7 @@
   position: absolute;
   left: 50%;
   translate: -50%;
-  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+  filter: var(--pokemon-sprite-filter);
   transition: scale 100ms ease-in-out, filter 100ms ease-in-out;
   transform-origin: center;
 }
@@ -50,10 +50,12 @@
   padding: 0.5rem 1rem;
   text-transform: capitalize;
   font-weight: 500;
+  color: var(--off-white);
   /* Pill shape = border-radius needs to be greater than the height */
   border-radius: 10000px;
 }
 
+/* 
 .card.grass {
   background: color-mix(in srgb, var(--grass) 25%, transparent);
 }
@@ -196,4 +198,4 @@
 
 .card.normal:hover {
   border-color: var(--normal);
-}
+} */

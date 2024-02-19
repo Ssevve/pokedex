@@ -19,6 +19,8 @@
   --steel: #B7B7CE;
   --fairy: #D685AD;
 
+  --pokemon-sprite-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+
   /* App colors */
   --off-white: #fefefe;
   --dark-gray: #333333;
@@ -36,6 +38,12 @@ body,
   font-family: 'Poppins', sans-serif;
   background-color: var(--off-white);
   color: var(--dark-gray);
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  margin: 0;
 }
 
 img {
@@ -49,74 +57,150 @@ ul {
   list-style: none;
 }
 
-.grass {
+/* Pokemon type classes */
+
+.bg-grass {
   background: var(--grass);
 }
 
-.poison {
+.bg-poison {
   background: var(--poison);
 }
 
-.fire {
+.bg-fire {
   background: var(--fire);
 }
 
-.water {
+.bg-water {
   background: var(--water);
 }
 
-.electric {
+.bg-electric {
   background: var(--electric);
 }
 
-.bug {
+.bg-bug {
   background: var(--bug);
 }
 
-.ice {
+.bg-ice {
   background: var(--ice);
 }
 
-.fighting {
+.bg-fighting {
   background: var(--fighting);
 }
 
-.ground {
+.bg-ground {
   background: var(--ground);
 }
 
-.flying {
+.bg-flying {
   background: var(--flying);
 }
 
-.psychic {
+.bg-psychic {
   background: var(--psychic);
 }
 
-.rock {
+.bg-rock {
   background: var(--rock);
 }
 
-.ghost {
+.bg-ghost {
   background: var(--ghost);
 }
 
-.dragon {
+.bg-dragon {
   background: var(--dragon);
 }
 
-.dark {
+.bg-dark {
   background: var(--dark);
 }
 
-.steel {
+.bg-steel {
   background: var(--steel);
 }
 
-.fairy {
+.bg-fairy {
   background: var(--fairy);
 }
 
-.normal {
+.bg-normal {
   background: var(--normal);
+}
+
+/* Transparent Pokemon type classes */
+
+.bg-grass-transparent {
+  background: color-mix(in srgb, var(--grass) 25%, transparent);
+}
+
+.bg-poison-transparent {
+  background: color-mix(in srgb, var(--poison) 25%, transparent);
+}
+
+.bg-fire-transparent {
+  background: color-mix(in srgb, var(--fire) 25%, transparent);
+}
+
+.bg-water-transparent {
+  background: color-mix(in srgb, var(--water) 25%, transparent);
+}
+
+.bg-electric-transparent {
+  background: color-mix(in srgb, var(--electric) 25%, transparent);
+}
+
+.bg-bug-transparent {
+  background: color-mix(in srgb, var(--bug) 25%, transparent);
+}
+
+.bg-ice-transparent {
+  background: color-mix(in srgb, var(--ice) 25%, transparent);
+}
+
+.bg-fighting-transparent {
+  background: color-mix(in srgb, var(--fighting) 25%, transparent);
+}
+
+.bg-ground-transparent {
+  background: color-mix(in srgb, var(--ground) 25%, transparent);
+}
+
+.bg-flying-transparent {
+  background: color-mix(in srgb, var(--flying) 25%, transparent);
+}
+
+.bg-psychic-transparent {
+  background: color-mix(in srgb, var(--psychic) 25%, transparent);
+}
+
+.bg-rock-transparent {
+  background: color-mix(in srgb, var(--rock) 25%, transparent);
+}
+
+.bg-ghost-transparent {
+  background: color-mix(in srgb, var(--ghost) 25%, transparent);
+}
+
+.bg-dragon-transparent {
+  background: color-mix(in srgb, var(--dragon) 25%, transparent);
+}
+
+.bg-dark-transparent {
+  background: color-mix(in srgb, var(--dark) 25%, transparent);
+}
+
+.bg-steel-transparent {
+  background: color-mix(in srgb, var(--steel) 25%, transparent);
+}
+
+.bg-fairy-transparent {
+  background: color-mix(in srgb, var(--fairy) 25%, transparent);
+}
+
+.bg-normal-transparent {
+  background: color-mix(in srgb, var(--normal) 25%, transparent);
 }
