@@ -1,4 +1,5 @@
-import { HomePage, PokemonPage } from '@/pages';
+import { HomePage } from '@/pages/HomePage';
+import { PokemonPage } from '@/pages/PokemonPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export function App() {

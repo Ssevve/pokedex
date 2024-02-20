@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { pokeAPI } from './client';
 
 export const pokemonSchema = z
   .object({
@@ -39,8 +38,3 @@ export const pokemonSchema = z
     })),
     ...rest,
   }));
-
-// Pokemon param can be a Pokemon ID or a Pokemon name.
-export async function fetchSinglePokemon(pokemon: string) {
-  return pokemonSchema.parse(await pokeAPI(`/pokemon/${pokemon}`));
-}

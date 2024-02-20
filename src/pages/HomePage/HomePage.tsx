@@ -1,8 +1,9 @@
+import { PokeballLoader } from '@/components/PokeballLoader';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './HomePage.module.css';
-import { PokeballLoader, PokemonCard } from './components';
-import { usePokemons } from './hooks';
+import { PokemonCard } from './PokemonCard';
+import { usePokemons } from './usePokemons';
 
 export function HomePage() {
   const { data, isLoading, isFetchingNextPage, fetchNextPage } = usePokemons();

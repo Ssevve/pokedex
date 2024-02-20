@@ -1,7 +1,8 @@
 import { POKEMONS_PER_PAGE } from '@/constants';
+import { pokemonSchema } from '@/schemas/pokemonSchema';
+import { pokeAPI } from '@/services/pokeAPI';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import { pokeAPI } from './client';
-import { fetchSinglePokemon } from '.';
 
 const pokemonsPageSchema = z.object({
   next: z.string().url().nullable(),
@@ -19,7 +20,7 @@ export async function fetchPokemons({ pageParam = 0 }) {
 
   const pokemons = await Promise.all(
     pokemonsPage.results.map(async ({ name }) => {
-      return fetchSinglePokemon(name);
+      return pokemonSchema.parse(await pokeAPI(`/pokemon/${name}`));
     }),
   );
 
@@ -27,4 +28,15 @@ export async function fetchPokemons({ pageParam = 0 }) {
     next: pokemonsPage.next,
     results: pokemons,
   };
+}
+
+export function usePokemons() {
+  return useInfiniteQuery({
+    initialPageParam: 0,
+    queryKey: ['pokemons'],
+    queryFn: fetchPokemons,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.next ? allPages.length * POKEMONS_PER_PAGE : undefined;
+    },
+  });
 }
