@@ -1,10 +1,36 @@
 import { PokeballLoader } from '@/components/PokeballLoader';
 import { padPokemonId } from '@/utils';
 import clsx from 'clsx';
+import {
+  HomeIcon,
+  MoveVerticalIcon,
+  PercentCircleIcon,
+  WeightIcon,
+  SmileIcon,
+  ShapesIcon,
+} from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import styles from './PokemonPage.module.css';
 import { usePokemon } from './hooks/usePokemon';
 import { useSpecies } from './hooks/useSpecies';
+import { Characteristic } from './Characteristic';
+
+function capitalize(text: string) {
+  return text[0].toUpperCase() + text.slice(1).toLowerCase();
+}
+
+function convertCaptureRateToPercentage(captureRate: number) {
+  const MAX_CAPTURE_RATE = 255;
+  return ((captureRate / MAX_CAPTURE_RATE) * 100).toFixed(1);
+}
+
+function convertHectogramsToKilograms(hectograms: number) {
+  return hectograms / 10;
+}
+
+function convertDecimetersToMeters(decimeters: number) {
+  return decimeters / 10;
+}
 
 // Makes flavor text suitable for HTML presentation
 // https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
@@ -35,9 +61,14 @@ export function PokemonPage() {
 
   const flavorTexts = getSpecies.data?.flavorTexts || [];
 
-  if (getPokemon.data) {
-    const { sprite, types, name, id } = getPokemon.data;
+  const isSuccess = getPokemon.isSuccess && getSpecies.isSuccess;
+
+  if (isSuccess) {
+    const { sprite, types, name, id, weight, height } = getPokemon.data;
     const mainType = types[0];
+
+    const { habitat, captureRate, baseHappiness, shape } = getSpecies.data;
+
     return (
       <main className={styles.container}>
         <header className={styles.header}>
@@ -56,8 +87,42 @@ export function PokemonPage() {
               </li>
             ))}
           </ul>
-          <p className={styles.flavorText}>{formatFlavorText(getRandomFlavorText(flavorTexts))}</p>
+          <section className={styles.section}>
+            <h2 className={styles.sectionHeading}>Flavor text</h2>
+            <p className={styles.flavorText}>
+              {formatFlavorText(getRandomFlavorText(flavorTexts))}
+            </p>
+          </section>
         </header>
+        <section className={styles.section}>
+          <h2 className={styles.sectionHeading}>Characteristics</h2>
+          {/* TODO: Breakpoints and columns for characteristics */}
+          <div className={styles.characteristics}>
+            <Characteristic icon={WeightIcon} title="Weight">
+              {`${convertHectogramsToKilograms(weight)}kg`}
+            </Characteristic>
+
+            <Characteristic icon={MoveVerticalIcon} title="Height">
+              {`${convertDecimetersToMeters(height)}m`}
+            </Characteristic>
+
+            <Characteristic icon={PercentCircleIcon} title="Capture">
+              {`${convertCaptureRateToPercentage(captureRate)}%`}
+            </Characteristic>
+
+            <Characteristic icon={HomeIcon} title="Habitat">
+              {habitat ? capitalize(habitat) : 'N/A'}
+            </Characteristic>
+
+            <Characteristic icon={SmileIcon} title="Happiness">
+              {baseHappiness}
+            </Characteristic>
+
+            <Characteristic icon={ShapesIcon} title="Shape">
+              {capitalize(shape)}
+            </Characteristic>
+          </div>
+        </section>
       </main>
     );
   }

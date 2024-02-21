@@ -42,7 +42,8 @@ body,
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin: 0;
 }
 
@@ -134,6 +135,7 @@ ul {
 /* Transparent Pokemon type classes */
 
 .bg-grass-transparent {
+  border-color: var(--grass);
   background: color-mix(in srgb, var(--grass) 25%, transparent);
 }
 

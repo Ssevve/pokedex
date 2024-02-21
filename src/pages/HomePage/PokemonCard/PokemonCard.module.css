@@ -5,7 +5,6 @@
   padding: 1.5rem;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 5px;
   position: relative;
-  border: 2px solid transparent;
   transition: border-color 100ms ease-in-out;
 }
 
@@ -34,9 +33,10 @@
   padding-top: 6rem;
 }
 
+
 .name {
   text-transform: capitalize;
-  margin-block: 0.75rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
 }
 
@@ -54,148 +54,3 @@
   /* Pill shape = border-radius needs to be greater than the height */
   border-radius: 10000px;
 }
-
-/* 
-.card.grass {
-  background: color-mix(in srgb, var(--grass) 25%, transparent);
-}
-
-.card.grass:hover {
-  border-color: var(--grass);
-}
-
-.card.poison {
-  background: color-mix(in srgb, var(--poison) 25%, transparent);
-}
-
-.card.poison:hover {
-  border-color: var(--poison);
-}
-
-.card.fire {
-  background: color-mix(in srgb, var(--fire) 25%, transparent);
-}
-
-.card.fire:hover {
-  border-color: var(--fire);
-}
-
-.card.water {
-  background: color-mix(in srgb, var(--water) 25%, transparent);
-}
-
-.card.water:hover {
-  border-color: var(--water);
-}
-
-.card.electric {
-  background: color-mix(in srgb, var(--electric) 25%, transparent);
-}
-
-.card.electric:hover {
-  border-color: var(--electric);
-}
-
-.card.bug {
-  background: color-mix(in srgb, var(--bug) 25%, transparent);
-}
-
-.card.bug:hover {
-  border-color: var(--bug);
-}
-
-.card.ice {
-  background: color-mix(in srgb, var(--ice) 25%, transparent);
-}
-
-.card.ice:hover {
-  border-color: var(--ice);
-}
-
-.card.fighting {
-  background: color-mix(in srgb, var(--fighting) 25%, transparent);
-}
-
-.card.fighting:hover {
-  border-color: var(--fighting);
-}
-
-.card.ground {
-  background: color-mix(in srgb, var(--ground) 25%, transparent);
-}
-
-.card.ground:hover {
-  border-color: var(--ground);
-}
-
-.card.flying {
-  background: color-mix(in srgb, var(--flying) 25%, transparent);
-}
-
-.card.flying:hover {
-  border-color: var(--flying);
-}
-
-.card.psychic {
-  background: color-mix(in srgb, var(--psychic) 25%, transparent);
-}
-
-.card.psychic:hover {
-  border-color: var(--psychic);
-}
-
-.card.rock {
-  background: color-mix(in srgb, var(--rock) 25%, transparent);
-}
-
-.card.rock:hover {
-  border-color: var(--rock);
-}
-
-.card.ghost {
-  background: color-mix(in srgb, var(--ghost) 25%, transparent);
-}
-
-.card.ghost:hover {
-  border-color: var(--ghost);
-}
-
-.card.dragon {
-  background: color-mix(in srgb, var(--dragon) 25%, transparent);
-}
-
-.card.dragon:hover {
-  border-color: var(--dragon);
-}
-
-.card.dark {
-  background: color-mix(in srgb, var(--dark) 25%, transparent);
-}
-
-.card.dark:hover {
-  border-color: var(--dark);
-}
-
-.card.steel {
-  background: color-mix(in srgb, var(--steel) 25%, transparent);
-}
-
-.card.steel:hover {
-  border-color: var(--steel);
-}
-
-.card.fairy {
-  background: color-mix(in srgb, var(--fairy) 25%, transparent);
-}
-
-.card.fairy:hover {
-  border-color: var(--fairy);
-}
-
-.card.normal {
-  background: color-mix(in srgb, var(--normal) 25%, transparent);
-}
-
-.card.normal:hover {
-  border-color: var(--normal);
-} */
