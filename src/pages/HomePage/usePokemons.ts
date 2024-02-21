@@ -1,5 +1,5 @@
 import { POKEMONS_PER_PAGE } from '@/constants';
-import { pokemonSchema } from '@/schemas/pokemonSchema';
+import { pokemonSchema } from '@/schemas';
 import { pokeAPI } from '@/services/pokeAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { z } from 'zod';

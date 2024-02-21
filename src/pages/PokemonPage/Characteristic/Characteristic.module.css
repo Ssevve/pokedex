@@ -3,15 +3,14 @@
   row-gap: 0.25rem;
   text-align: center;
   justify-items: center;
-  background-color: #f0f0f0;
+  background-color: #eeeeee;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   border-radius: 5px;
 }
 
 .characteristicTitle {
   font-size: 1rem;
-  max-width: min-content;
   font-weight: 400;
   color: #888888;
 }

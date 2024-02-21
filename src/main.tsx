@@ -4,7 +4,7 @@ import 'normalize.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { queryClient } from './config/queryClient';
-import './index.css';
+import '@/styles/globals.css';
 import { App } from '@/components/App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

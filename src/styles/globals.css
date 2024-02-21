@@ -39,6 +39,7 @@ body,
   background-color: var(--off-white);
   color: var(--dark-gray);
   line-height: 1.5;
+  min-height: 100vh;
 }
 
 h1,

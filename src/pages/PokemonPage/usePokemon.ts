@@ -1,18 +1,13 @@
+import { namedPokeAPIResourceSchema, pokemonSchema } from '@/schemas';
 import { pokeAPI } from '@/services/pokeAPI';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
-// TODO: Extract named resource schema to a separate file
-
 const flavorTextEntriesSchema = z.array(
   z.object({
     flavor_text: z.string(),
-    language: z.object({
-      name: z.string(),
-    }),
-    version: z.object({
-      name: z.string(),
-    }),
+    language: namedPokeAPIResourceSchema,
+    version: namedPokeAPIResourceSchema,
   }),
 );
 
@@ -28,19 +23,11 @@ function getEnglishFlavorTexts(entries: FlavorTextEntries) {
 
 const speciesSchema = z
   .object({
-    shape: z.object({
-      name: z.string(),
-      url: z.string(),
-    }),
+    shape: namedPokeAPIResourceSchema,
     base_happiness: z.number(),
     flavor_text_entries: flavorTextEntriesSchema,
     capture_rate: z.number(),
-    habitat: z
-      .object({
-        name: z.string(),
-        url: z.string().url(),
-      })
-      .nullable(),
+    habitat: namedPokeAPIResourceSchema.nullable(),
   })
   .transform(({ flavor_text_entries, capture_rate, habitat, base_happiness, shape }) => ({
     flavorTexts: getEnglishFlavorTexts(flavor_text_entries),
@@ -51,9 +38,22 @@ const speciesSchema = z
   }));
 
 // `pokemon` param can be a Pokemon ID or a Pokemon name.
-export function useSpecies(pokemon: string) {
+export function usePokemon(pokemon: string) {
   return useQuery({
-    queryKey: ['species', pokemon],
-    queryFn: async () => speciesSchema.parse(await pokeAPI(`/pokemon-species/${pokemon}`)),
+    queryKey: ['pokemon', pokemon],
+    queryFn: async () => {
+      const [pokemonData, speciesData] = await Promise.all([
+        await pokeAPI(`/pokemon/${pokemon}`),
+        await pokeAPI(`/pokemon-species/${pokemon}`),
+      ]);
+
+      const parsedPokemonData = pokemonSchema.parse(pokemonData);
+      const parsedSpeciesData = speciesSchema.parse(speciesData);
+
+      return {
+        ...parsedPokemonData,
+        ...parsedSpeciesData,
+      };
+    },
   });
 }

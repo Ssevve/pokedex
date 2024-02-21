@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+export const namedPokeAPIResourceSchema = z.object({
+  name: z.string(),
+  url: z.string(),
+});
+
 export const pokemonSchema = z
   .object({
     name: z.string(),
@@ -13,9 +18,7 @@ export const pokemonSchema = z
     id: z.number(),
     types: z.array(
       z.object({
-        type: z.object({
-          name: z.string(),
-        }),
+        type: namedPokeAPIResourceSchema,
       }),
     ),
     weight: z.number(),
@@ -23,9 +26,7 @@ export const pokemonSchema = z
     stats: z.array(
       z.object({
         base_stat: z.number(),
-        stat: z.object({
-          name: z.string(),
-        }),
+        stat: namedPokeAPIResourceSchema,
       }),
     ),
   })

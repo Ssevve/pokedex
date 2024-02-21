@@ -1,0 +1,5 @@
+/* 500px */
+@value medium: screen and (min-width: 35.5em);
+
+/* 1095px */
+@value large: screen and (min-width: 68.4375em);
