@@ -9,8 +9,12 @@
   border-radius: 5px;
 }
 
-.characteristicTitle {
+.characteristic h3 {
   font-size: 1rem;
   font-weight: 400;
   color: #888888;
+}
+
+.characteristic span {
+  color: var(--dark-gray);
 }

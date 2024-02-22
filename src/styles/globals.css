@@ -134,10 +134,81 @@ ul {
   background: var(--normal);
 }
 
+.text-grass {
+  color: var(--grass);
+}
+
+.text-poison {
+  color: var(--poison);
+}
+
+.text-fire {
+  color: var(--fire);
+}
+
+.text-water {
+  color: var(--water);
+}
+
+.text-electric {
+  color: var(--electric);
+}
+
+.text-bug {
+  color: var(--bug);
+}
+
+.text-ice {
+  color: var(--ice);
+}
+
+.text-fighting {
+  color: var(--fighting);
+}
+
+.text-ground {
+  color: var(--ground);
+}
+
+.text-flying {
+  color: var(--flying);
+}
+
+.text-psychic {
+  color: var(--psychic);
+}
+
+.text-rock {
+  color: var(--rock);
+}
+
+.text-ghost {
+  color: var(--ghost);
+}
+
+.text-dragon {
+  color: var(--dragon);
+}
+
+.text-dark {
+  color: var(--dark);
+}
+
+.text-steel {
+  color: var(--steel);
+}
+
+.text-fairy {
+  color: var(--fairy);
+}
+
+.text-normal {
+  color: var(--normal);
+}
+
 /* Transparent Pokemon type classes */
 
 .bg-grass-transparent {
-  border-color: var(--grass);
   background: color-mix(in srgb, var(--grass) 25%, transparent);
 }
 

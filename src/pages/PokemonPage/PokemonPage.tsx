@@ -94,27 +94,27 @@ export function PokemonPage() {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Characteristics</h2>
           <div className={styles.characteristics}>
-            <Characteristic icon={WeightIcon} title="Weight">
+            <Characteristic icon={WeightIcon} title="Weight" type={mainType}>
               {`${convertHectogramsToKilograms(weight)}kg`}
             </Characteristic>
 
-            <Characteristic icon={MoveVerticalIcon} title="Height">
+            <Characteristic icon={MoveVerticalIcon} title="Height" type={mainType}>
               {`${convertDecimetersToMeters(height)}m`}
             </Characteristic>
 
-            <Characteristic icon={PercentCircleIcon} title="Catch Rate">
+            <Characteristic icon={PercentCircleIcon} title="Catch Rate" type={mainType}>
               {`${convertStatValueToPercentage(captureRate)}%`}
             </Characteristic>
 
-            <Characteristic icon={HomeIcon} title="Habitat">
+            <Characteristic icon={HomeIcon} title="Habitat" type={mainType}>
               {habitat ? capitalize(habitat) : 'N/A'}
             </Characteristic>
 
-            <Characteristic icon={SmileIcon} title="Happiness">
+            <Characteristic icon={SmileIcon} title="Happiness" type={mainType}>
               {baseHappiness} / {MAX_POKEMON_STAT_VALUE}
             </Characteristic>
 
-            <Characteristic icon={ShapesIcon} title="Shape">
+            <Characteristic icon={ShapesIcon} title="Shape" type={mainType}>
               {capitalize(shape)}
             </Characteristic>
           </div>
