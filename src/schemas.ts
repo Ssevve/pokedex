@@ -35,7 +35,7 @@ export const pokemonSchema = z
     sprite: sprites.other['official-artwork'].front_default,
     stats: stats.map((stat) => ({
       name: stat.stat.name,
-      base: stat.base_stat,
+      value: stat.base_stat,
     })),
     ...rest,
   }));

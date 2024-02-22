@@ -1,4 +1,5 @@
 import { PokeballLoader } from '@/components/PokeballLoader';
+import { MAX_POKEMON_STAT_VALUE } from '@/constants';
 import { padPokemonId } from '@/utils';
 import clsx from 'clsx';
 import {
@@ -9,15 +10,16 @@ import {
   SmileIcon,
   WeightIcon,
 } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
 import { Characteristic } from './Characteristic';
 import styles from './PokemonPage.module.css';
 import { usePokemon } from './usePokemon';
 import {
   capitalize,
-  convertCaptureRateToPercentage,
   convertDecimetersToMeters,
   convertHectogramsToKilograms,
+  convertStatValueToPercentage,
   formatFlavorText,
   getRandomFlavorText,
 } from './utils';
@@ -26,9 +28,21 @@ type PokemonPageParams = {
   pokemon: string;
 };
 
+const statNamesMap: Record<string, string> = {
+  hp: 'hp',
+  attack: 'atk',
+  defense: 'def',
+  'special-attack': 'sp. atk',
+  'special-defense': 'sp. def',
+  speed: 'spd',
+};
+
 export function PokemonPage() {
   const { pokemon } = useParams() as PokemonPageParams;
   const { data, isError } = usePokemon(pokemon);
+  const [inViewRef, isInView] = useInView({
+    triggerOnce: true,
+  });
 
   if (data) {
     const {
@@ -43,6 +57,7 @@ export function PokemonPage() {
       baseHappiness,
       shape,
       flavorTexts,
+      stats,
     } = data;
 
     const mainType = types[0];
@@ -69,7 +84,7 @@ export function PokemonPage() {
               </ul>
             </div>
           </div>
-          <section className={clsx(styles.section, styles.flavorTextWrapper)}>
+          <section className={styles.section}>
             <h2 className={styles.sectionHeading}>Flavor text</h2>
             <p className={styles.flavorText}>
               {formatFlavorText(getRandomFlavorText(flavorTexts))}
@@ -88,7 +103,7 @@ export function PokemonPage() {
             </Characteristic>
 
             <Characteristic icon={PercentCircleIcon} title="Catch Rate">
-              {`${convertCaptureRateToPercentage(captureRate)}%`}
+              {`${convertStatValueToPercentage(captureRate)}%`}
             </Characteristic>
 
             <Characteristic icon={HomeIcon} title="Habitat">
@@ -96,13 +111,38 @@ export function PokemonPage() {
             </Characteristic>
 
             <Characteristic icon={SmileIcon} title="Happiness">
-              {baseHappiness}
+              {baseHappiness} / {MAX_POKEMON_STAT_VALUE}
             </Characteristic>
 
             <Characteristic icon={ShapesIcon} title="Shape">
               {capitalize(shape)}
             </Characteristic>
           </div>
+        </section>
+        <section className={clsx(styles.section, styles.statsSection)}>
+          <h2 className={styles.sectionHeading}>Base Stats</h2>
+          <table ref={inViewRef} className={styles.table}>
+            <tbody>
+              {stats.map((stat) => (
+                <tr key={stat.name}>
+                  <th className={styles.statLabel}>{statNamesMap[stat.name]}</th>
+                  <td>
+                    <div className={styles.statTrack}>
+                      <div
+                        className={clsx(
+                          styles.statTrackFill,
+                          `bg-${mainType}`,
+                          isInView && styles.animateGrow,
+                        )}
+                        style={{ maxWidth: convertStatValueToPercentage(stat.value) + '%' }}
+                      />
+                      <div className={styles.statTrackValue}>{stat.value}</div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </section>
       </main>
     );
