@@ -28,7 +28,7 @@ type PokemonPageParams = {
   pokemon: string;
 };
 
-const statNamesMap: Record<string, string> = {
+const statDisplayNames: Record<string, string> = {
   hp: 'hp',
   attack: 'atk',
   defense: 'def',
@@ -125,7 +125,7 @@ export function PokemonPage() {
             <tbody>
               {stats.map((stat) => (
                 <tr key={stat.name}>
-                  <th className={styles.statLabel}>{statNamesMap[stat.name]}</th>
+                  <th className={styles.statLabel}>{statDisplayNames[stat.name]}</th>
                   <td>
                     <div className={styles.statTrack}>
                       <div
@@ -150,5 +150,9 @@ export function PokemonPage() {
 
   if (isError) return <div>Oops!</div>;
 
-  return <PokeballLoader />;
+  return (
+    <div className={clsx(styles.container, styles.loaderWrapper)}>
+      <PokeballLoader />
+    </div>
+  );
 }

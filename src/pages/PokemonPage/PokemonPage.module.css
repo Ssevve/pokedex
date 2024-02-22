@@ -1,5 +1,10 @@
 @value medium, large from '@/styles/breakpoints';
 
+.loaderWrapper {
+  place-items: center;
+  height: 100vh;
+}
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
