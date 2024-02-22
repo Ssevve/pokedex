@@ -54,6 +54,7 @@
   flex-wrap: wrap;
   column-gap: 0.5rem;
   align-items: baseline;
+  justify-content: center;
 }
 
 .id {
@@ -70,6 +71,7 @@
   list-style: none;
   display: flex;
   gap: 1rem;
+  justify-content: center;
 }
 
 .types li {
@@ -166,6 +168,10 @@
     justify-content: center;
     display: flex;
     gap: 1rem;
+  }
+
+  .types {
+    justify-content: start;
   }
 
   .characteristics {
