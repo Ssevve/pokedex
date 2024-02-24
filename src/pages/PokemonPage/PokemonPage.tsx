@@ -9,6 +9,7 @@ import {
   ShapesIcon,
   SmileIcon,
   WeightIcon,
+  MoveRightIcon,
 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
@@ -58,6 +59,7 @@ export function PokemonPage() {
       shape,
       flavorTexts,
       stats,
+      evolutionChain,
     } = data;
 
     const mainType = types[0];
@@ -143,6 +145,36 @@ export function PokemonPage() {
               ))}
             </tbody>
           </table>
+        </section>
+        <section className={clsx(styles.section, styles.evolutionsSection)}>
+          <h2 className={styles.sectionHeading}>Evolution Chain</h2>
+          {evolutionChain.length === 0 ? (
+            <p>This Pokemon does not evolve!</p>
+          ) : (
+            evolutionChain.map((evolution) => (
+              <div className={styles.evolutionWrapper}>
+                <div className={styles.evolutionPokemon}>
+                  <div className={styles.evolutionPokemonSpriteWrapper}>
+                    <div className={styles.pokeballBg} />
+                    <img src={evolution.from.sprite} alt={evolution.from.name} />
+                  </div>
+                  <span>{evolution.from.name}</span>
+                </div>
+                <MoveRightIcon className={styles.evolutionArrow} size={75} />
+                <div className={clsx(styles.evolutionPokemon, styles.evolutionPokemonTo)}>
+                  <div className={styles.evolutionPokemonSpriteWrapper}>
+                    <div className={styles.pokeballBg} />
+                    <img
+                      className={styles.evolutionImage}
+                      src={evolution.to.sprite}
+                      alt={evolution.to.name}
+                    />
+                  </div>
+                  <span>{evolution.to.name}</span>
+                </div>
+              </div>
+            ))
+          )}
         </section>
       </main>
     );
