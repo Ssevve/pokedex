@@ -1,13 +1,5 @@
 @value medium, large from '@/styles/breakpoints';
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  justify-items: center;
-  padding: 1rem;
-}
-
 .list {
   display: grid;
   row-gap: 5rem;

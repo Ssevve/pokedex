@@ -1,27 +1,14 @@
+import { Main } from '@/components/Main';
 import { PokeballLoader } from '@/components/PokeballLoader';
-import { MAX_POKEMON_STAT_VALUE } from '@/constants';
 import clsx from 'clsx';
-import {
-  HomeIcon,
-  MoveVerticalIcon,
-  PercentCircleIcon,
-  ShapesIcon,
-  SmileIcon,
-  WeightIcon,
-  MoveRightIcon,
-} from 'lucide-react';
+import { MoveRightIcon } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
-import { Characteristic } from './Characteristics/Characteristic';
 import styles from './PokemonPage.module.css';
-import { usePokemon } from './usePokemon';
-import {
-  capitalize,
-  convertDecimetersToMeters,
-  convertHectogramsToKilograms,
-  convertStatValueToPercentage,
-} from './utils';
+import { Characteristics } from './components/Characteristics/Characteristics';
 import { Header } from './components/Header/Header';
+import { usePokemon } from './usePokemon';
+import { convertStatValueToPercentage } from './utils';
 
 type PokemonPageParams = {
   pokemon: string;
@@ -63,36 +50,17 @@ export function PokemonPage() {
     const mainType = types[0];
 
     return (
-      <main className={styles.container}>
+      <Main>
         <Header id={id} name={name} sprite={sprite} types={types} flavorTexts={flavorTexts} />
-        <section className={styles.section}>
-          <h2 className={styles.sectionHeading}>Characteristics</h2>
-          <div className={styles.characteristics}>
-            <Characteristic icon={WeightIcon} title="Weight" type={mainType}>
-              {`${convertHectogramsToKilograms(weight)}kg`}
-            </Characteristic>
-
-            <Characteristic icon={MoveVerticalIcon} title="Height" type={mainType}>
-              {`${convertDecimetersToMeters(height)}m`}
-            </Characteristic>
-
-            <Characteristic icon={PercentCircleIcon} title="Catch Rate" type={mainType}>
-              {`${convertStatValueToPercentage(captureRate)}%`}
-            </Characteristic>
-
-            <Characteristic icon={HomeIcon} title="Habitat" type={mainType}>
-              {habitat ? capitalize(habitat) : 'N/A'}
-            </Characteristic>
-
-            <Characteristic icon={SmileIcon} title="Happiness" type={mainType}>
-              {baseHappiness} / {MAX_POKEMON_STAT_VALUE}
-            </Characteristic>
-
-            <Characteristic icon={ShapesIcon} title="Shape" type={mainType}>
-              {capitalize(shape)}
-            </Characteristic>
-          </div>
-        </section>
+        <Characteristics
+          baseHappiness={baseHappiness}
+          captureRate={captureRate}
+          habitat={habitat}
+          height={height}
+          mainType={mainType}
+          shape={shape}
+          weight={weight}
+        />
         <section className={clsx(styles.section, styles.statsSection)}>
           <h2 className={styles.sectionHeading}>Base Stats</h2>
           <table ref={inViewRef} className={styles.table}>
@@ -148,15 +116,15 @@ export function PokemonPage() {
             ))
           )}
         </section>
-      </main>
+      </Main>
     );
   }
 
   if (isError) return <div>Oops!</div>;
 
   return (
-    <div className={clsx(styles.container, styles.loaderWrapper)}>
+    <Main className={styles.loaderWrapper}>
       <PokeballLoader />
-    </div>
+    </Main>
   );
 }

@@ -1,6 +1,7 @@
 import { padPokemonId } from '@/utils';
 import clsx from 'clsx';
 import styles from './Header.module.css';
+import { Section } from '@/components/Section';
 
 // Makes flavor text suitable for HTML presentation
 // https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
@@ -51,10 +52,9 @@ export function Header({ types, sprite, name, id, flavorTexts }: HeaderProps) {
           </ul>
         </div>
       </div>
-      <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>Flavor text</h2>
+      <Section title="Flavor text">
         <p className={styles.flavorText}>{formatFlavorText(getRandomFlavorText(flavorTexts))}</p>
-      </section>
+      </Section>
     </header>
   );
 }

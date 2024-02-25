@@ -1,0 +1,19 @@
+@value medium, large from '@/styles/breakpoints';
+
+.characteristics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+@media medium {
+  .characteristics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media large {
+  .characteristics {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
