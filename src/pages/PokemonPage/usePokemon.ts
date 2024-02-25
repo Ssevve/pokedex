@@ -3,6 +3,44 @@ import { pokeAPI } from '@/services/pokeAPI';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 
+type RelationPrefix = 'double' | 'half' | 'no';
+type RelationSuffix = 'from' | 'to';
+type PokemonTypeRelation = Record<string, number>;
+
+const relationMultipliers: Record<RelationPrefix, number> = {
+  double: 2,
+  half: 0.5,
+  no: 0,
+};
+
+// TODO: try to get rid of triple nested loop
+function normalizeEffectiveness(effectiveness: z.infer<typeof effectivenessResponsesSchema>) {
+  const normalized: Record<RelationSuffix, PokemonTypeRelation> = {
+    to: {},
+    from: {},
+  };
+
+  effectiveness.forEach((eff) => {
+    Object.entries(eff).forEach(([relation, types]) => {
+      const splitRelation = relation.split('_');
+      const relationPrefix = splitRelation[0] as RelationPrefix;
+      const relationSuffix = splitRelation[splitRelation.length - 1] as RelationSuffix;
+      types.forEach(({ name }) => {
+        const currentMultiplier = normalized[relationSuffix][name] || 1;
+        const newMultiplier = currentMultiplier * relationMultipliers[relationPrefix];
+
+        if (newMultiplier === 1) {
+          delete normalized[relationSuffix][name];
+        } else {
+          normalized[relationSuffix][name] = newMultiplier;
+        }
+      });
+    });
+  });
+
+  return normalized;
+}
+
 const flavorTextEntriesSchema = z.array(
   z.object({
     flavor_text: z.string(),
@@ -112,6 +150,25 @@ const shapeDataSchema = z.object({
   ),
 });
 
+const damageRelationSchema = z.array(z.object({ name: z.string() }));
+
+const typeResponseSchema = z
+  .object({
+    damage_relations: z.object({
+      double_damage_from: damageRelationSchema,
+      double_damage_to: damageRelationSchema,
+      half_damage_from: damageRelationSchema,
+      half_damage_to: damageRelationSchema,
+      no_damage_from: damageRelationSchema,
+      no_damage_to: damageRelationSchema,
+    }),
+  })
+  .transform(({ damage_relations }) => ({
+    ...damage_relations,
+  }));
+
+const effectivenessResponsesSchema = z.array(typeResponseSchema);
+
 // `pokemon` param can be a Pokemon ID or a Pokemon name.
 export function usePokemon(pokemon: string) {
   return useQuery({
@@ -134,11 +191,18 @@ export function usePokemon(pokemon: string) {
       const shapeName =
         awesome_names.find(({ language }) => language.name === 'en')?.awesome_name || shape.name;
 
+      const effectivenessResponses = await Promise.all(
+        parsedPokemonData.types.map(async (type) => await pokeAPI(`/type/${type}`)),
+      );
+
+      const effectiveness = effectivenessResponsesSchema.parse(effectivenessResponses);
+
       return {
         ...parsedPokemonData,
         ...parsedSpeciesData,
         shape: shapeName,
         evolutionChain: normalizeEvolutionChain(chain),
+        effectiveness: normalizeEffectiveness(effectiveness),
       };
     },
   });

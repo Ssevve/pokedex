@@ -7,6 +7,7 @@ import { Characteristics } from './components/Characteristics';
 import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
 import { usePokemon } from './usePokemon';
+// import { Effectiveness } from './components/Effectiveness';
 
 type PokemonPageParams = {
   pokemon: string;
@@ -54,7 +55,10 @@ export function PokemonPage() {
           shape={shape}
           weight={weight}
         />
-        <BaseStats stats={stats} mainType={mainType} />
+        <div>
+          <BaseStats stats={stats} mainType={mainType} />
+          {/* <Effectiveness types={types} /> */}
+        </div>
         <EvolutionChain evolutionChain={evolutionChain} />
       </Main>
     );
