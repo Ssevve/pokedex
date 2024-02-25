@@ -27,10 +27,10 @@ interface HeaderProps {
   name: string;
   id: number;
   flavorTexts: Array<string>;
+  mainType: string;
 }
 
-export function Header({ types, sprite, name, id, flavorTexts }: HeaderProps) {
-  const mainType = types[0];
+export function Header({ types, sprite, name, id, flavorTexts, mainType }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.baseInfo}>

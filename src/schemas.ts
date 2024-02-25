@@ -39,3 +39,5 @@ export const pokemonSchema = z
     })),
     ...rest,
   }));
+
+export type PokemonStat = z.infer<typeof pokemonSchema>['stats'][0];
