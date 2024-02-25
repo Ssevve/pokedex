@@ -24,7 +24,7 @@ function getPokemonImageById(id: string) {
   return `${baseURL}/official-artwork/${id}.png`;
 }
 
-interface NormalizedEvolution {
+export interface NormalizedEvolution {
   from: {
     name: string;
     sprite: string;

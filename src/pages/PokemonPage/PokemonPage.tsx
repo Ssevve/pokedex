@@ -1,11 +1,10 @@
 import { Main } from '@/components/Main';
 import { PokeballLoader } from '@/components/PokeballLoader';
-import clsx from 'clsx';
-import { MoveRightIcon } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import styles from './PokemonPage.module.css';
 import { BaseStats } from './components/BaseStats';
 import { Characteristics } from './components/Characteristics';
+import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
 import { usePokemon } from './usePokemon';
 
@@ -56,7 +55,7 @@ export function PokemonPage() {
           weight={weight}
         />
         <BaseStats stats={stats} mainType={mainType} />
-        <EvolutionChain />
+        <EvolutionChain evolutionChain={evolutionChain} />
       </Main>
     );
   }

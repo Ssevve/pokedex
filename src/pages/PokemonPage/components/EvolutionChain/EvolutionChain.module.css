@@ -1,0 +1,64 @@
+@value medium from '@/styles/breakpoints';
+
+.evolutionChain {
+  row-gap: 2rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pokemon {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+  flex: 1;
+}
+
+.pokemon img {
+  z-index: 1;
+  width: 75%;
+}
+
+.pokemon span {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.spriteWrapper {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.pokeballBg {
+  position: absolute;
+  background-color: var(--light-gray);
+  mask-image: url('./pokeball-bg.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  width: 90%;
+  height: 90%;
+}
+
+.arrow {
+  stroke: var(--light-gray);
+  flex: 0.5;
+}
+
+@media medium {
+  .pokemon {
+    flex-direction: row;
+  }
+
+  .toPokemon {
+    flex-direction: row-reverse;
+  }
+
+}
