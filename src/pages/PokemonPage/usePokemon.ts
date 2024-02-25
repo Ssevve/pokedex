@@ -79,12 +79,11 @@ const speciesSchema = z
       url: z.string().url(),
     }),
   })
-  .transform(({ flavor_text_entries, capture_rate, habitat, base_happiness, shape, ...rest }) => ({
+  .transform(({ flavor_text_entries, capture_rate, habitat, base_happiness, ...rest }) => ({
     flavorTexts: getEnglishFlavorTexts(flavor_text_entries),
     captureRate: capture_rate,
     habitat: habitat?.name || null,
     baseHappiness: base_happiness,
-    shape: shape.name,
     ...rest,
   }));
 
@@ -104,6 +103,15 @@ const evolutionChainDataSchema = z.object({
   chain: evolutionChainSchema,
 });
 
+const shapeDataSchema = z.object({
+  awesome_names: z.array(
+    z.object({
+      awesome_name: z.string(),
+      language: namedPokeAPIResourceSchema,
+    }),
+  ),
+});
+
 // `pokemon` param can be a Pokemon ID or a Pokemon name.
 export function usePokemon(pokemon: string) {
   return useQuery({
@@ -115,14 +123,21 @@ export function usePokemon(pokemon: string) {
       ]);
 
       const parsedPokemonData = pokemonSchema.parse(pokemonData);
-      const { evolution_chain, ...parsedSpeciesData } = speciesSchema.parse(speciesData);
+      const { evolution_chain, shape, ...parsedSpeciesData } = speciesSchema.parse(speciesData);
 
       const evolutionChainResponse = await fetch(evolution_chain.url);
       const { chain } = evolutionChainDataSchema.parse(await evolutionChainResponse.json());
 
+      const shapeResponse = await fetch(shape.url);
+      const { awesome_names } = shapeDataSchema.parse(await shapeResponse.json());
+
+      const shapeName =
+        awesome_names.find(({ language }) => language.name === 'en')?.awesome_name || shape.name;
+
       return {
         ...parsedPokemonData,
         ...parsedSpeciesData,
+        shape: shapeName,
         evolutionChain: normalizeEvolutionChain(chain),
       };
     },

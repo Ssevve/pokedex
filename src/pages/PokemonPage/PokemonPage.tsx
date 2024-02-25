@@ -14,7 +14,7 @@ type PokemonPageParams = {
 
 export function PokemonPage() {
   const { pokemon } = useParams() as PokemonPageParams;
-  const { data, isError } = usePokemon(pokemon);
+  const { data, isError } = usePokemon(pokemon.toLowerCase());
 
   if (data) {
     const {

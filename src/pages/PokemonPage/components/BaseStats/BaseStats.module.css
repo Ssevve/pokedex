@@ -69,7 +69,7 @@
 }
 
 @media large {
-  .statsSection {
+  .baseStats {
     width: 50%;
   }
 }
