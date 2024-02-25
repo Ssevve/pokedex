@@ -2,6 +2,7 @@ import { padPokemonId } from '@/utils';
 import clsx from 'clsx';
 import styles from './Header.module.css';
 import { Section } from '@/components/Section';
+import { PokemonTypes } from '@/components/PokemonTypes';
 
 // Makes flavor text suitable for HTML presentation
 // https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
@@ -43,13 +44,7 @@ export function Header({ types, sprite, name, id, flavorTexts, mainType }: Heade
             <h1 className={styles.name}>{name}</h1>
             <span className={styles.id}>#{padPokemonId(id)}</span>
           </div>
-          <ul className={styles.types}>
-            {types.map((type) => (
-              <li key={type} className={`bg-${type}`}>
-                {type}
-              </li>
-            ))}
-          </ul>
+          <PokemonTypes className={styles.types} types={types} />
         </div>
       </div>
       <Section title="Flavor text">

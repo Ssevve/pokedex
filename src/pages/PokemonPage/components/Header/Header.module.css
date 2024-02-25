@@ -48,20 +48,7 @@
 }
 
 .types {
-  margin-top: 1rem;
-  list-style: none;
-  display: flex;
-  gap: 1rem;
   justify-content: center;
-}
-
-.types li {
-  padding: 0.5rem 1rem;
-  text-transform: capitalize;
-  font-weight: 500;
-  color: var(--off-white);
-  /* Pill shape = border-radius needs to be greater than the height */
-  border-radius: 10000px;
 }
 
 .flavorText {

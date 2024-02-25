@@ -38,18 +38,3 @@
   margin-bottom: 0.75rem;
   font-weight: 600;
 }
-
-.types {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-.types li {
-  padding: 0.5rem 1rem;
-  text-transform: capitalize;
-  font-weight: 500;
-  color: var(--off-white);
-  /* Pill shape = border-radius needs to be greater than the height */
-  border-radius: 10000px;
-}
