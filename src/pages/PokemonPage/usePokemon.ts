@@ -265,14 +265,16 @@ export function usePokemon(pokemon: string) {
         parsedPokemonData.types.map(async (type) => await pokeAPI(`/type/${type}`)),
       );
 
-      const effectiveness = damageRelationsResponsesSchema.parse(damageRelationsResponses);
+      const damageRelations = damageRelationsResponsesSchema.parse(damageRelationsResponses);
+
+      console.log(combineDamageRelations(damageRelations));
 
       return {
         ...parsedPokemonData,
         ...parsedSpeciesData,
         shape: shapeName,
         evolutionChain: normalizeEvolutionChain(chain),
-        damageRelations: combineDamageRelations(effectiveness),
+        damageRelations: combineDamageRelations(damageRelations),
       };
     },
   });
