@@ -1,6 +1,5 @@
 import { PokeballLoader } from '@/components/PokeballLoader';
 import { MAX_POKEMON_STAT_VALUE } from '@/constants';
-import { padPokemonId } from '@/utils';
 import clsx from 'clsx';
 import {
   HomeIcon,
@@ -13,7 +12,7 @@ import {
 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useParams } from 'react-router-dom';
-import { Characteristic } from './Characteristic';
+import { Characteristic } from './Characteristics/Characteristic';
 import styles from './PokemonPage.module.css';
 import { usePokemon } from './usePokemon';
 import {
@@ -21,9 +20,8 @@ import {
   convertDecimetersToMeters,
   convertHectogramsToKilograms,
   convertStatValueToPercentage,
-  formatFlavorText,
-  getRandomFlavorText,
 } from './utils';
+import { Header } from './components/Header/Header';
 
 type PokemonPageParams = {
   pokemon: string;
@@ -66,33 +64,7 @@ export function PokemonPage() {
 
     return (
       <main className={styles.container}>
-        <header className={styles.header}>
-          <div className={styles.baseInfo}>
-            <div className={styles.spriteWrapper}>
-              <div className={clsx(styles.spriteBackground, `bg-${mainType}-transparent`)} />
-              <img className={styles.sprite} src={sprite} alt={name} />
-            </div>
-            <div>
-              <div className={styles.nameWrapper}>
-                <h1 className={styles.name}>{name}</h1>
-                <span className={styles.id}>#{padPokemonId(id)}</span>
-              </div>
-              <ul className={styles.types}>
-                {types.map((type) => (
-                  <li key={type} className={`bg-${type}`}>
-                    {type}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <section className={styles.section}>
-            <h2 className={styles.sectionHeading}>Flavor text</h2>
-            <p className={styles.flavorText}>
-              {formatFlavorText(getRandomFlavorText(flavorTexts))}
-            </p>
-          </section>
-        </header>
+        <Header id={id} name={name} sprite={sprite} types={types} flavorTexts={flavorTexts} />
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Characteristics</h2>
           <div className={styles.characteristics}>

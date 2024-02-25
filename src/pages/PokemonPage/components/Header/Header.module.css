@@ -1,0 +1,92 @@
+@value medium, large from '@/styles/breakpoints';
+
+.header {
+  display: grid;
+}
+
+.spriteWrapper {
+  max-width: 250px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  flex-grow: 0;
+}
+
+.sprite {
+  position: relative;
+  filter: var(--pokemon-sprite-filter);
+}
+
+.spriteBackground {
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  border-radius: 50%;
+}
+
+.baseInfo {
+  margin: 0 auto;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.id {
+  font-size: 1.2rem;
+}
+
+.name {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.types {
+  margin-top: 1rem;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.types li {
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--off-white);
+  /* Pill shape = border-radius needs to be greater than the height */
+  border-radius: 10000px;
+}
+
+.flavorText {
+  margin: 0;
+}
+
+@media medium {
+  .baseInfo {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .types {
+    justify-content: start;
+  }
+}
+
+@media large {
+  .baseInfo {
+    flex: 1;
+  }
+
+  .flavorTextWrapper {
+    flex: 1;
+  }
+}
