@@ -13,32 +13,100 @@ const relationMultipliers: Record<RelationPrefix, number> = {
   no: 0,
 };
 
-// TODO: try to get rid of triple nested loop
-function normalizeEffectiveness(effectiveness: z.infer<typeof effectivenessResponsesSchema>) {
+const getRelationParts = (relation: string) => {
+  const splitRelation = relation.split('_');
+  const relationPrefix = splitRelation[0] as RelationPrefix;
+  const relationSuffix = splitRelation[splitRelation.length - 1] as RelationSuffix;
+
+  return [relationPrefix, relationSuffix] as const;
+};
+
+function normalizeDamageRelations(relations: DamageRelations) {
   const normalized: Record<RelationSuffix, PokemonTypeRelation> = {
     to: {},
     from: {},
   };
 
-  effectiveness.forEach((eff) => {
-    Object.entries(eff).forEach(([relation, types]) => {
-      const splitRelation = relation.split('_');
-      const relationPrefix = splitRelation[0] as RelationPrefix;
-      const relationSuffix = splitRelation[splitRelation.length - 1] as RelationSuffix;
-      types.forEach(({ name }) => {
-        const currentMultiplier = normalized[relationSuffix][name] || 1;
-        const newMultiplier = currentMultiplier * relationMultipliers[relationPrefix];
+  Object.entries(relations).forEach(([relation, types]) => {
+    const [prefix, suffix] = getRelationParts(relation);
 
-        if (newMultiplier === 1) {
-          delete normalized[relationSuffix][name];
-        } else {
-          normalized[relationSuffix][name] = newMultiplier;
-        }
-      });
+    types.forEach(({ name }) => {
+      normalized[suffix][name] = relationMultipliers[prefix];
     });
   });
 
   return normalized;
+}
+
+function combineDefensiveDamageRelations(
+  mainRelation: PokemonTypeRelation,
+  secondaryRelation: PokemonTypeRelation,
+) {
+  const combined: PokemonTypeRelation = {};
+
+  Object.entries(mainRelation).forEach(([type, multiplier]) => {
+    const secondaryRelationMultiplier = secondaryRelation[type];
+    const newMultiplier = multiplier * (secondaryRelationMultiplier || 1);
+
+    if (newMultiplier === 1) {
+      if (type in combined) {
+        delete combined[type];
+      }
+    } else {
+      combined[type] = newMultiplier;
+    }
+  });
+
+  Object.entries(secondaryRelation).forEach(([type, multiplier]) => {
+    if (!(type in mainRelation)) {
+      combined[type] = multiplier;
+    }
+  });
+
+  return combined;
+}
+
+function combineOffensiveDamageRelations(
+  mainRelation: PokemonTypeRelation,
+  secondaryRelation: PokemonTypeRelation,
+) {
+  const combined: PokemonTypeRelation = {};
+
+  Object.entries(mainRelation).forEach(([type, multiplier]) => {
+    const secondaryRelationMultiplier = secondaryRelation[type];
+    if (secondaryRelationMultiplier >= 0) {
+      combined[type] =
+        secondaryRelationMultiplier > multiplier ? secondaryRelationMultiplier : multiplier;
+    } else {
+      if (multiplier > 1) {
+        combined[type] = multiplier;
+      }
+    }
+  });
+
+  Object.entries(secondaryRelation).forEach(([type, multiplier]) => {
+    if (!(type in combined) && multiplier > 1) combined[type] = multiplier;
+  });
+
+  return combined;
+}
+
+function combineDamageRelations(damageRelations: z.infer<typeof damageRelationsResponsesSchema>) {
+  const mainTypeDamageRelations = normalizeDamageRelations(damageRelations[0]);
+  if (damageRelations.length === 1) return mainTypeDamageRelations;
+
+  const secondaryTypeDamageRelations = normalizeDamageRelations(damageRelations[1]);
+
+  return {
+    to: combineOffensiveDamageRelations(
+      mainTypeDamageRelations.to,
+      secondaryTypeDamageRelations.to,
+    ),
+    from: combineDefensiveDamageRelations(
+      mainTypeDamageRelations.from,
+      secondaryTypeDamageRelations.from,
+    ),
+  };
 }
 
 const flavorTextEntriesSchema = z.array(
@@ -152,7 +220,7 @@ const shapeDataSchema = z.object({
 
 const damageRelationSchema = z.array(z.object({ name: z.string() }));
 
-const typeResponseSchema = z
+const damageRelationsSchema = z
   .object({
     damage_relations: z.object({
       double_damage_from: damageRelationSchema,
@@ -167,7 +235,9 @@ const typeResponseSchema = z
     ...damage_relations,
   }));
 
-const effectivenessResponsesSchema = z.array(typeResponseSchema);
+type DamageRelations = z.infer<typeof damageRelationsSchema>;
+
+const damageRelationsResponsesSchema = z.array(damageRelationsSchema);
 
 // `pokemon` param can be a Pokemon ID or a Pokemon name.
 export function usePokemon(pokemon: string) {
@@ -191,18 +261,18 @@ export function usePokemon(pokemon: string) {
       const shapeName =
         awesome_names.find(({ language }) => language.name === 'en')?.awesome_name || shape.name;
 
-      const effectivenessResponses = await Promise.all(
+      const damageRelationsResponses = await Promise.all(
         parsedPokemonData.types.map(async (type) => await pokeAPI(`/type/${type}`)),
       );
 
-      const effectiveness = effectivenessResponsesSchema.parse(effectivenessResponses);
+      const effectiveness = damageRelationsResponsesSchema.parse(damageRelationsResponses);
 
       return {
         ...parsedPokemonData,
         ...parsedSpeciesData,
         shape: shapeName,
         evolutionChain: normalizeEvolutionChain(chain),
-        effectiveness: normalizeEffectiveness(effectiveness),
+        damageRelations: combineDamageRelations(effectiveness),
       };
     },
   });
