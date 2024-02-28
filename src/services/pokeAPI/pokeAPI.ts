@@ -9,6 +9,14 @@ import {
 
 const baseURL = 'https://pokeapi.co/api/v2';
 
+const urls = {
+  page: 'pokemon',
+  pokemon: 'pokemon',
+  species: 'pokemon-species',
+  evolutionChain: 'evolution-chain',
+  type: 'type',
+} as const;
+
 export const client = async (endpoint: string) => {
   const res = await fetch(baseURL + endpoint);
 
@@ -23,21 +31,33 @@ export const client = async (endpoint: string) => {
 };
 
 export async function getPokemonPage(pageParam: number, perPage: number = POKEMONS_PER_PAGE) {
-  return pokemonPageSchema.parse(await client(`/pokemon?limit=${perPage}&offset=${pageParam}`));
+  const endpoint = `/${urls.page}?limit=${perPage}&offset=${pageParam}`;
+  const res = await client(endpoint);
+  return pokemonPageSchema.parse(res);
 }
 
+// `pokemon` param can be a Pokemon ID or a Pokemon name.
 export async function getPokemon(pokemon: string) {
-  return pokemonSchema.parse(await client(`/pokemon/${pokemon}`));
+  const endpoint = `/${urls.pokemon}/${pokemon}`;
+  const res = await client(endpoint);
+  return pokemonSchema.parse(res);
 }
 
+// `pokemon` param can be a Pokemon ID or a Pokemon name.
 export async function getSpecies(pokemon: string) {
-  return speciesSchema.parse(await client(`/pokemon-species/${pokemon}`));
+  const endpoint = `/${urls.species}/${pokemon}`;
+  const res = await client(endpoint);
+  return speciesSchema.parse(res);
 }
 
 export async function getEvolutionChainById(id: string) {
-  return evolutionChainDataSchema.parse(await client(`/evolution-chain/${id}`));
+  const endpoint = `/${urls.evolutionChain}/${id}`;
+  const res = await client(endpoint);
+  return evolutionChainDataSchema.parse(res);
 }
 
 export async function getTypeByName(name: string) {
-  return pokemonTypeSchema.parse(await client(`/type/${name}`));
+  const endpoint = `/${urls.type}/${name}`;
+  const res = await client(endpoint);
+  return pokemonTypeSchema.parse(res);
 }

@@ -26,6 +26,12 @@ export function getEnglishFlavorTexts(entries: FlavorTextEntries) {
   ];
 }
 
+export function getPokemonImageById(id: string) {
+  const baseURL =
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
+  return `${baseURL}/${id}.png`;
+}
+
 export function normalizeEvolutionChain(
   evolutionChain: EvolutionChain,
 ): Array<NormalizedEvolution> {
@@ -54,11 +60,6 @@ export function normalizeEvolutionChain(
   }, []);
 
   return evolutions;
-}
-
-function getPokemonImageById(id: string) {
-  const baseURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other';
-  return `${baseURL}/official-artwork/${id}.png`;
 }
 
 const effectivenessMultipliers: Record<EffectivenessKeyPrefix, number> = {
@@ -151,7 +152,7 @@ function combineOffensiveEffectiveness(
     } else {
       if (multiplier > 1) {
         combined[type] = multiplier;
-      }
+      } // else ? what if < 1
     }
   });
 
@@ -162,10 +163,7 @@ function combineOffensiveEffectiveness(
   return combined;
 }
 
-function transformTypeEffectiveness({
-  offense,
-  defense,
-}: ReturnType<typeof parseTypeEffectiveness>) {
+function transformTypeEffectiveness({ offense, defense }: ParsedTypeEffectiveness) {
   return {
     offense: groupTypesByMultiplier(offense),
     defense: groupTypesByMultiplier(defense),
