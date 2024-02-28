@@ -117,8 +117,8 @@ function combineDefensiveEffectiveness(
   const combined: TypeEffectiveness = {};
 
   Object.entries(mainDefensiveEffectiveness).forEach(([type, multiplier]) => {
-    const secondaryRelationMultiplier = secondaryDefensiveEffectiveness[type];
-    const newMultiplier = multiplier * (secondaryRelationMultiplier || 1);
+    const secondaryMultiplier = secondaryDefensiveEffectiveness[type];
+    const newMultiplier = multiplier * (secondaryMultiplier || 1);
 
     if (newMultiplier === 1) {
       if (type in combined) {
@@ -145,14 +145,13 @@ function combineOffensiveEffectiveness(
   const combined: TypeEffectiveness = {};
 
   Object.entries(mainOffensiveEffectiveness).forEach(([type, multiplier]) => {
-    const secondaryRelationMultiplier = secondaryOffensiveEffectiveness[type];
-    if (secondaryRelationMultiplier >= 0) {
-      combined[type] =
-        secondaryRelationMultiplier > multiplier ? secondaryRelationMultiplier : multiplier;
+    const secondaryMultiplier = secondaryOffensiveEffectiveness[type];
+    if (secondaryMultiplier >= 0) {
+      combined[type] = secondaryMultiplier > multiplier ? secondaryMultiplier : multiplier;
     } else {
       if (multiplier > 1) {
         combined[type] = multiplier;
-      } // else ? what if < 1
+      }
     }
   });
 
