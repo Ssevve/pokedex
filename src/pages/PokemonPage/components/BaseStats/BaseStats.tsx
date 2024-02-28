@@ -1,6 +1,6 @@
 import { Section } from '@/components/Section';
 import { POKEMON_TYPE_COLORS } from '@/constants';
-import { PokemonStat } from '@/schemas';
+import { Stat } from '@/services/pokeAPI';
 import clsx from 'clsx';
 import { useInView } from 'react-intersection-observer';
 import { convertStatValueToPercentage } from '../../utils';
@@ -16,7 +16,7 @@ const statDisplayNames: Record<string, string> = {
 };
 
 interface BaseStatsProps {
-  stats: Array<PokemonStat>;
+  stats: Array<Stat>;
   mainType: string;
 }
 

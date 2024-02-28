@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './HomePage.module.css';
 import { PokemonCard } from './PokemonCard';
-import { usePokemons } from './usePokemons';
+import { usePokemonPage } from './usePokemonPage';
 import { Main } from '@/components/Main';
 
 export function HomePage() {
-  const { data, isLoading, isFetchingNextPage, fetchNextPage } = usePokemons();
+  const { data, isLoading, isFetchingNextPage, fetchNextPage } = usePokemonPage();
   const [inViewRef, isInView] = useInView();
 
   const pokemonList = data?.pages.flatMap((page) => page.results) || [];
@@ -20,18 +20,20 @@ export function HomePage() {
 
   return (
     <Main>
-      <ul className={styles.list}>
-        {pokemonList.map(({ name, types, sprite, id }, i) => {
-          const isLastPokemon = i === pokemonList.length - 1;
+      {data && (
+        <ul className={styles.list}>
+          {pokemonList.map(({ name, types, sprite, id }, i) => {
+            const isLastPokemon = i === pokemonList.length - 1;
 
-          return (
-            <li key={id} ref={isLastPokemon ? inViewRef : null}>
-              <PokemonCard name={name} types={types} sprite={sprite} id={id} />
-            </li>
-          );
-        })}
-      </ul>
-      {isLoadingPokemons && <PokeballLoader />}
+            return (
+              <li key={id} ref={isLastPokemon ? inViewRef : null}>
+                <PokemonCard name={name} types={types} sprite={sprite} id={id} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <div className={styles.loaderWrapper}>{isLoadingPokemons && <PokeballLoader />}</div>
     </Main>
   );
 }

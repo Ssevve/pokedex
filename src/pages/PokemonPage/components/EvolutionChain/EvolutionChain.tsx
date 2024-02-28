@@ -1,7 +1,7 @@
 import { Section } from '@/components/Section';
 import clsx from 'clsx';
 import { MoveRightIcon } from 'lucide-react';
-import { NormalizedEvolution } from '../../usePokemon';
+import { NormalizedEvolution } from '../../types';
 import styles from './EvolutionChain.module.css';
 
 interface EvolutionChainProps {

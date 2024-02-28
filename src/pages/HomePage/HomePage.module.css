@@ -17,6 +17,12 @@
 }
 
 
+.loaderWrapper {
+  display: flex;
+  margin: 0 auto;
+  height: 100%;
+}
+
 @media medium {
   .list {
     grid-template-columns: repeat(2, 1fr);

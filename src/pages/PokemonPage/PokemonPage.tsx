@@ -6,7 +6,7 @@ import { BaseStats } from './components/BaseStats';
 import { Characteristics } from './components/Characteristics';
 import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
-import { usePokemon } from './usePokemon';
+import { useDetailedPokemon } from './useDetailedPokemon';
 // import { Effectiveness } from './components/Effectiveness';
 
 type PokemonPageParams = {
@@ -15,7 +15,7 @@ type PokemonPageParams = {
 
 export function PokemonPage() {
   const { pokemon } = useParams() as PokemonPageParams;
-  const { data, isError } = usePokemon(pokemon.toLowerCase());
+  const { data, isError } = useDetailedPokemon(pokemon.toLowerCase());
 
   if (data) {
     const {
@@ -32,7 +32,10 @@ export function PokemonPage() {
       flavorTexts,
       stats,
       evolutionChain,
+      effectiveness,
     } = data;
+
+    console.log(effectiveness);
 
     const mainType = types[0];
 

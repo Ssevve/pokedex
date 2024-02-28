@@ -1,13 +1,21 @@
 import { MAX_POKEMON_STAT_VALUE } from '@/constants';
+import { Effectiveness, EvolutionChain, FlavorTextEntries, PokemonType } from '@/services/pokeAPI';
 import {
-  DamageRelations,
-  DamageRelationsResponses,
-  EvolutionChain,
-  FlavorTextEntries,
-} from './usePokemon';
+  EffectivenessKey,
+  EffectivenessKeyPrefix,
+  EffectivenessKeySuffix,
+  NormalizedEvolution,
+  ParsedTypeEffectiveness,
+  TypeEffectiveness,
+} from './types';
 
 export function convertStatValueToPercentage(value: number) {
   return ((value / MAX_POKEMON_STAT_VALUE) * 100).toFixed(1);
+}
+
+export function extractIdFromUrl(url: string) {
+  const match = url.match(/\/(\d+)\//);
+  return match ? match[1] : '';
 }
 
 export function getEnglishFlavorTexts(entries: FlavorTextEntries) {
@@ -18,22 +26,6 @@ export function getEnglishFlavorTexts(entries: FlavorTextEntries) {
   ];
 }
 
-function extractPokemonIdFromUrl(url: string) {
-  const match = url.match(/\/(\d+)\//);
-  return match ? match[1] : '';
-}
-
-export interface NormalizedEvolution {
-  from: {
-    name: string;
-    sprite: string;
-  };
-  to: {
-    name: string;
-    sprite: string;
-  };
-}
-
 export function normalizeEvolutionChain(
   evolutionChain: EvolutionChain,
 ): Array<NormalizedEvolution> {
@@ -42,8 +34,8 @@ export function normalizeEvolutionChain(
   if (!evolves_to.length) return [];
 
   const evolutions = evolves_to.reduce<Array<NormalizedEvolution>>((chain, evolution) => {
-    const fromId = extractPokemonIdFromUrl(species.url);
-    const toId = extractPokemonIdFromUrl(evolution.species.url);
+    const fromId = extractIdFromUrl(species.url);
+    const toId = extractIdFromUrl(evolution.species.url);
 
     return [
       ...chain,
@@ -64,47 +56,48 @@ export function normalizeEvolutionChain(
   return evolutions;
 }
 
-export function getPokemonImageById(id: string) {
+function getPokemonImageById(id: string) {
   const baseURL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other';
   return `${baseURL}/official-artwork/${id}.png`;
 }
 
-type DamageRelationPrefix = 'double' | 'half' | 'no';
-type DamageRelationSuffix = 'from' | 'to';
-type DamageRelationKey = `${DamageRelationPrefix}_damage_${DamageRelationSuffix}`;
-type TypeDamageRelation = Record<string, number>;
-
-const relationMultipliers: Record<DamageRelationPrefix, number> = {
+const effectivenessMultipliers: Record<EffectivenessKeyPrefix, number> = {
   double: 2,
   half: 0.5,
   no: 0,
 };
 
-function getRelationKeyParts(relationKey: DamageRelationKey) {
-  const splitRelation = relationKey.split('_');
-  const relationPrefix = splitRelation[0] as DamageRelationPrefix;
-  const relationSuffix = splitRelation[splitRelation.length - 1] as DamageRelationSuffix;
+const effectivenessKeyMap = {
+  from: 'defense',
+  to: 'offense',
+} as const;
 
-  return [relationPrefix, relationSuffix] as const;
+function getEffectivenessKeyParts(effectivenessKey: EffectivenessKey) {
+  const split = effectivenessKey.split('_');
+  const prefix = split[0] as EffectivenessKeyPrefix;
+  const suffix = split[split.length - 1] as EffectivenessKeySuffix;
+
+  return [prefix, suffix] as const;
 }
 
-function transformDamageRelations(relations: DamageRelations) {
-  const transformed: Record<DamageRelationSuffix, TypeDamageRelation> = {
-    to: {},
-    from: {},
+function parseTypeEffectiveness(typeEffectiveness: PokemonType) {
+  const parsed: ParsedTypeEffectiveness = {
+    offense: {},
+    defense: {},
   };
 
-  Object.entries(relations).forEach(([relationKey, types]) => {
+  Object.entries(typeEffectiveness).forEach(([effectivenessKey, types]) => {
     types.forEach(({ name }) => {
-      const [prefix, suffix] = getRelationKeyParts(relationKey as DamageRelationKey);
-      transformed[suffix][name] = relationMultipliers[prefix];
+      const [prefix, suffix] = getEffectivenessKeyParts(effectivenessKey as EffectivenessKey);
+      const newKey = effectivenessKeyMap[suffix];
+      parsed[newKey][name] = effectivenessMultipliers[prefix];
     });
   });
 
-  return transformed;
+  return parsed;
 }
 
-function groupTypesByMultiplier(combinedTypeMultipliers: TypeDamageRelation) {
+function groupTypesByMultiplier(combinedTypeMultipliers: TypeEffectiveness) {
   const grouped: Record<number, Array<string>> = {};
   const newKeys = [...new Set(Object.values(combinedTypeMultipliers))];
   const types = Object.keys(combinedTypeMultipliers);
@@ -116,14 +109,14 @@ function groupTypesByMultiplier(combinedTypeMultipliers: TypeDamageRelation) {
   return grouped;
 }
 
-function combineDefensiveDamageRelations(
-  mainRelation: TypeDamageRelation,
-  secondaryRelation: TypeDamageRelation,
+function combineDefensiveEffectiveness(
+  mainDefensiveEffectiveness: TypeEffectiveness,
+  secondaryDefensiveEffectiveness: TypeEffectiveness,
 ) {
-  const combined: TypeDamageRelation = {};
+  const combined: TypeEffectiveness = {};
 
-  Object.entries(mainRelation).forEach(([type, multiplier]) => {
-    const secondaryRelationMultiplier = secondaryRelation[type];
+  Object.entries(mainDefensiveEffectiveness).forEach(([type, multiplier]) => {
+    const secondaryRelationMultiplier = secondaryDefensiveEffectiveness[type];
     const newMultiplier = multiplier * (secondaryRelationMultiplier || 1);
 
     if (newMultiplier === 1) {
@@ -135,23 +128,23 @@ function combineDefensiveDamageRelations(
     }
   });
 
-  Object.entries(secondaryRelation).forEach(([type, multiplier]) => {
-    if (!(type in mainRelation)) {
+  Object.entries(secondaryDefensiveEffectiveness).forEach(([type, multiplier]) => {
+    if (!(type in mainDefensiveEffectiveness)) {
       combined[type] = multiplier;
     }
   });
 
-  return groupTypesByMultiplier(combined);
+  return combined;
 }
 
-function combineOffensiveDamageRelations(
-  mainRelation: TypeDamageRelation,
-  secondaryRelation: TypeDamageRelation,
+function combineOffensiveEffectiveness(
+  mainOffensiveEffectiveness: TypeEffectiveness,
+  secondaryOffensiveEffectiveness: TypeEffectiveness,
 ) {
-  const combined: TypeDamageRelation = {};
+  const combined: TypeEffectiveness = {};
 
-  Object.entries(mainRelation).forEach(([type, multiplier]) => {
-    const secondaryRelationMultiplier = secondaryRelation[type];
+  Object.entries(mainOffensiveEffectiveness).forEach(([type, multiplier]) => {
+    const secondaryRelationMultiplier = secondaryOffensiveEffectiveness[type];
     if (secondaryRelationMultiplier >= 0) {
       combined[type] =
         secondaryRelationMultiplier > multiplier ? secondaryRelationMultiplier : multiplier;
@@ -162,31 +155,40 @@ function combineOffensiveDamageRelations(
     }
   });
 
-  Object.entries(secondaryRelation).forEach(([type, multiplier]) => {
+  Object.entries(secondaryOffensiveEffectiveness).forEach(([type, multiplier]) => {
     if (!(type in combined) && multiplier > 1) combined[type] = multiplier;
   });
 
-  return groupTypesByMultiplier(combined);
+  return combined;
 }
 
-export function combineDamageRelations(damageRelations: DamageRelationsResponses) {
-  const mainTypeDamageRelations = transformDamageRelations(damageRelations[0]);
-  if (damageRelations.length === 1)
-    return {
-      to: groupTypesByMultiplier(mainTypeDamageRelations.to),
-      from: groupTypesByMultiplier(mainTypeDamageRelations.from),
-    };
-
-  const secondaryTypeDamageRelations = transformDamageRelations(damageRelations[1]);
-
+function transformTypeEffectiveness({
+  offense,
+  defense,
+}: ReturnType<typeof parseTypeEffectiveness>) {
   return {
-    to: combineOffensiveDamageRelations(
-      mainTypeDamageRelations.to,
-      secondaryTypeDamageRelations.to,
-    ),
-    from: combineDefensiveDamageRelations(
-      mainTypeDamageRelations.from,
-      secondaryTypeDamageRelations.from,
-    ),
+    offense: groupTypesByMultiplier(offense),
+    defense: groupTypesByMultiplier(defense),
   };
+}
+
+export function combineTypeEffectiveness(effectiveness: Effectiveness) {
+  const mainTypeEffectiveness = parseTypeEffectiveness(effectiveness[0]);
+  if (effectiveness.length === 1) {
+    return transformTypeEffectiveness(mainTypeEffectiveness);
+  }
+
+  const secondaryTypeEffectiveness = parseTypeEffectiveness(effectiveness[1]);
+
+  const combinedOffense = combineOffensiveEffectiveness(
+    mainTypeEffectiveness.offense,
+    secondaryTypeEffectiveness.offense,
+  );
+
+  const combinedDefense = combineDefensiveEffectiveness(
+    mainTypeEffectiveness.defense,
+    secondaryTypeEffectiveness.defense,
+  );
+
+  return transformTypeEffectiveness({ offense: combinedOffense, defense: combinedDefense });
 }
