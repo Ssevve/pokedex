@@ -1,4 +1,4 @@
-@value medium from '@/styles/breakpoints';
+@value large from '@/styles/breakpoints';
 
 .evolutionChain {
   row-gap: 2rem;
@@ -12,7 +12,6 @@
 }
 
 .pokemon {
-  max-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,6 +20,7 @@
 }
 
 .pokemon img {
+  max-width: 300px;
   z-index: 1;
   width: 75%;
 }
@@ -28,6 +28,7 @@
 .pokemon span {
   font-weight: 700;
   text-transform: uppercase;
+  font-size: clamp(0.8rem, 2.5vw, 1.1rem);
 }
 
 .spriteWrapper {
@@ -52,7 +53,7 @@
   flex: 0.5;
 }
 
-@media medium {
+@media large {
   .pokemon {
     flex-direction: row;
   }

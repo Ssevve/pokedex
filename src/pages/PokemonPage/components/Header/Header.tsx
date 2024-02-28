@@ -1,8 +1,8 @@
-import { PokemonTypes } from '@/components/PokemonTypes';
 import { Section } from '@/components/Section';
 import { POKEMON_TYPE_COLORS } from '@/constants';
 import { padPokemonId } from '@/utils';
 import styles from './Header.module.css';
+import { Badge } from '@/components/Badge';
 
 // Makes flavor text suitable for HTML presentation
 // https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
@@ -40,14 +40,18 @@ export function Header({ types, sprite, name, id, flavorTexts, mainType }: Heade
             className={styles.spriteBackground}
             style={{ '--bg-color': POKEMON_TYPE_COLORS[mainType] }}
           />
-          <img className={styles.sprite} src={sprite} alt={name} />
+          <img width={250} height={250} className={styles.sprite} src={sprite} alt={name} />
         </div>
         <div>
           <div className={styles.nameWrapper}>
             <h1 className={styles.name}>{name}</h1>
             <span className={styles.id}>#{padPokemonId(id)}</span>
           </div>
-          <PokemonTypes className={styles.types} types={types} />
+          <div className={styles.types}>
+            {types.map((type) => (
+              <Badge key={type} backgroundColor={POKEMON_TYPE_COLORS[type]} text={type} />
+            ))}
+          </div>
         </div>
       </div>
       <Section title="Flavor text">

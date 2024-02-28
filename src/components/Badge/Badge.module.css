@@ -1,11 +1,4 @@
-.types {
-  margin-top: 1rem;
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-.types li {
+.badge {
   --bg-color: gray;
   background-color: var(--bg-color);
   padding: 0.5rem 1rem;
@@ -14,4 +7,5 @@
   color: var(--off-white);
   /* Pill shape = border-radius needs to be greater than the height */
   border-radius: 10000px;
+  width: max-content;
 }
