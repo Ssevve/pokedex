@@ -1,7 +1,7 @@
+import { PokemonTypes } from '@/components/PokemonTypes';
+import { POKEMON_TYPE_COLORS } from '@/constants';
 import { padPokemonId } from '@/utils';
 import styles from './PokemonCard.module.css';
-import clsx from 'clsx';
-import { PokemonTypes } from '@/components/PokemonTypes';
 
 interface PokemonCardProps {
   name: string;
@@ -13,7 +13,7 @@ interface PokemonCardProps {
 export function PokemonCard({ name, sprite, types, id }: PokemonCardProps) {
   const mainType = types[0];
   return (
-    <div className={clsx(styles.card, `bg-${mainType}-transparent`)}>
+    <div className={styles.card} style={{ '--bg-color': POKEMON_TYPE_COLORS[mainType] }}>
       <img className={styles.sprite} src={sprite} alt={name} />
       <div className={styles.info}>
         <span>#{padPokemonId(id)}</span>

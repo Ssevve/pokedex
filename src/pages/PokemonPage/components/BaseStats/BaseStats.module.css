@@ -37,6 +37,8 @@
 }
 
 .statTrackFill {
+  --bg-color: gray;
+  background: var(--bg-color);
   width: 100%;
   height: 100%;
   border-top-right-radius: 0;

@@ -1,4 +1,6 @@
 .characteristic {
+  --icon-color: gray;
+  color: var(--icon-color);
   display: grid;
   row-gap: 0.25rem;
   text-align: center;

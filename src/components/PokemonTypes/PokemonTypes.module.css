@@ -6,6 +6,8 @@
 }
 
 .types li {
+  --bg-color: gray;
+  background-color: var(--bg-color);
   padding: 0.5rem 1rem;
   text-transform: capitalize;
   font-weight: 500;

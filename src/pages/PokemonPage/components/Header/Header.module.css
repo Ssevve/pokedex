@@ -18,6 +18,8 @@
 }
 
 .spriteBackground {
+  --bg-color: gray;
+  background: color-mix(in srgb, var(--bg-color) 25%, transparent);
   width: 80%;
   height: 80%;
   position: absolute;

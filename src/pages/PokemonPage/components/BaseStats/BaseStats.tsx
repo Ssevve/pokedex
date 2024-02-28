@@ -1,4 +1,5 @@
 import { Section } from '@/components/Section';
+import { POKEMON_TYPE_COLORS } from '@/constants';
 import { PokemonStat } from '@/schemas';
 import clsx from 'clsx';
 import { useInView } from 'react-intersection-observer';
@@ -35,12 +36,9 @@ export function BaseStats({ stats, mainType }: BaseStatsProps) {
                 <div className={styles.statTrack}>
                   <div
                     ref={i === 0 ? inViewRef : null}
-                    className={clsx(
-                      styles.statTrackFill,
-                      `bg-${mainType}`,
-                      isInView && styles.animateGrowStat,
-                    )}
+                    className={clsx(styles.statTrackFill, isInView && styles.animateGrowStat)}
                     style={{
+                      '--bg-color': POKEMON_TYPE_COLORS[mainType],
                       maxWidth: isInView ? convertStatValueToPercentage(stat.value) + '%' : 0,
                     }}
                   />

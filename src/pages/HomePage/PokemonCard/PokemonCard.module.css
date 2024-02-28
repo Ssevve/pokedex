@@ -1,4 +1,6 @@
 .card {
+  --bg-color: gray;
+  background: color-mix(in srgb, var(--bg-color) 25%, transparent);
   min-width: 227.5px;
   width: 100%;
   border-radius: 1rem;

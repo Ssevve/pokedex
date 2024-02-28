@@ -1,6 +1,7 @@
+import { POKEMON_TYPE_COLORS } from '@/constants';
 import { LucideIcon } from 'lucide-react';
+import { CSSProperties } from 'react';
 import styles from './Characteristic.module.css';
-import clsx from 'clsx';
 
 interface CharacteristicProps extends React.PropsWithChildren {
   icon: LucideIcon;
@@ -10,7 +11,10 @@ interface CharacteristicProps extends React.PropsWithChildren {
 
 export function Characteristic({ icon: Icon, type, title, children }: CharacteristicProps) {
   return (
-    <div className={clsx(styles.characteristic, `text-${type}`)}>
+    <div
+      className={styles.characteristic}
+      style={{ '--icon-color': POKEMON_TYPE_COLORS[type] } as CSSProperties}
+    >
       <Icon width={40} height={40} aria-hidden />
       <h3>{title}</h3>
       <span>{children}</span>
