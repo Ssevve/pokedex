@@ -1,1 +1,1 @@
-// export * from './Effectiveness';
+export * from './Effectiveness';

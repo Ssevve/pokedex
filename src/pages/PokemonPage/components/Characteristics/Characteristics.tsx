@@ -1,20 +1,9 @@
 import { Section } from '@/components/Section';
 import { MAX_POKEMON_STAT_VALUE } from '@/constants';
-import {
-  HomeIcon,
-  MoveVerticalIcon,
-  PercentCircleIcon,
-  ShapesIcon,
-  SmileIcon,
-  WeightIcon,
-} from 'lucide-react';
+import { MoveVerticalIcon, PercentCircleIcon, SmileIcon, WeightIcon } from 'lucide-react';
 import { convertStatValueToPercentage } from '../../utils';
 import { Characteristic } from './Characteristic';
 import styles from './Characteristics.module.css';
-
-function capitalize(text: string) {
-  return text[0].toUpperCase() + text.slice(1).toLowerCase();
-}
 
 function convertHectogramsToKilograms(hectograms: number) {
   return hectograms / 10;
@@ -39,8 +28,6 @@ export function Characteristics({
   weight,
   height,
   captureRate,
-  habitat,
-  shape,
   baseHappiness,
 }: CharacteristicsProps) {
   return (
@@ -58,16 +45,8 @@ export function Characteristics({
           {`${convertStatValueToPercentage(captureRate)}%`}
         </Characteristic>
 
-        <Characteristic icon={HomeIcon} title="Habitat" type={mainType}>
-          {habitat ? capitalize(habitat) : 'N/A'}
-        </Characteristic>
-
         <Characteristic icon={SmileIcon} title="Happiness" type={mainType}>
           {baseHappiness} / {MAX_POKEMON_STAT_VALUE}
-        </Characteristic>
-
-        <Characteristic icon={ShapesIcon} title="Shape" type={mainType}>
-          {capitalize(shape)}
         </Characteristic>
       </div>
     </Section>

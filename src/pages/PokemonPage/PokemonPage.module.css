@@ -1,4 +1,13 @@
+@value large from '@/styles/breakpoints';
+
 .loaderWrapper {
   place-items: center;
   height: 100vh;
+}
+
+@media large {
+  .sectionsWrapper {
+    display: flex;
+    gap: 1rem;
+  }
 }

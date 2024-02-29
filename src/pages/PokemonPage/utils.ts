@@ -1,5 +1,5 @@
 import { MAX_POKEMON_STAT_VALUE } from '@/constants';
-import { Effectiveness, EvolutionChain, FlavorTextEntries, PokemonType } from '@/services/pokeAPI';
+import { EvolutionChain, FlavorTextEntries, PokemonType } from '@/services/pokeAPI';
 import {
   EffectivenessKey,
   EffectivenessKeyPrefix,
@@ -8,6 +8,7 @@ import {
   ParsedTypeEffectiveness,
   TypeEffectiveness,
 } from './types';
+import { EffectivenessResponse } from '@/services/pokeAPI/types';
 
 export function convertStatValueToPercentage(value: number) {
   return ((value / MAX_POKEMON_STAT_VALUE) * 100).toFixed(1);
@@ -169,7 +170,7 @@ function transformTypeEffectiveness({ offense, defense }: ParsedTypeEffectivenes
   };
 }
 
-export function combineTypeEffectiveness(effectiveness: Effectiveness) {
+export function combineTypeEffectiveness(effectiveness: EffectivenessResponse) {
   const mainTypeEffectiveness = parseTypeEffectiveness(effectiveness[0]);
   if (effectiveness.length === 1) {
     return transformTypeEffectiveness(mainTypeEffectiveness);

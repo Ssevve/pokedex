@@ -1,9 +1,11 @@
 :root {
   --pokemon-sprite-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+  --border-radius: 5px;
 
   /* App colors */
   --off-white: #fefefe;
   --dark-gray: #333333;
+  --gray: #cccccc;
   --light-gray: #eeeeee;
 }
 

@@ -1,0 +1,69 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  height: 100%;
+}
+
+.multipliersWrapper {
+  border: 2px solid var(--gray);
+  padding: 1rem 1rem 1rem 1.5rem;
+  border-radius: var(--border-radius);
+  position: relative;
+  width: 50%;
+  min-width: 175px;
+  flex: 1;
+}
+
+.multipliersWrapper::before,
+.multipliersWrapper::after {
+  --size: 2rem;
+  content: '';
+  position: absolute;
+  left: calc((var(--size) / 2) * -1);
+  height: var(--size);
+  aspect-ratio: 1;
+  background: var(--off-white);
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.multipliersWrapper::before {
+  background-color: var(--gray);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  z-index: 2;
+}
+
+.multipliersWrapper::after {
+  background-color: var(--off-white);
+  z-index: 1;
+}
+
+.multipliersWrapper.offense::before {
+  mask-image: url('./swords.svg');
+}
+
+.multipliersWrapper.defense::before {
+  mask-image: url('./shield.svg');
+}
+
+.multiplierSection {
+  font-size: 0.8rem;
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+.multipliersWrapper h3 {
+  color: var(--dark-gray);
+}
+
+.multiplierSection+.multiplierSection {
+  margin-top: 1.25rem;
+}
+
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

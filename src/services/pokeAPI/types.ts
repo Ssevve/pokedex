@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import {
   baseEvolutionChainSchema,
-  effectivenessSchema,
+  effectivenessResponseSchema,
   flavorTextEntriesSchema,
   pokemonSchema,
   pokemonTypeSchema,
@@ -13,4 +13,4 @@ export type EvolutionChain = z.infer<typeof baseEvolutionChainSchema> & {
   evolves_to: Array<EvolutionChain>;
 };
 export type PokemonType = z.infer<typeof pokemonTypeSchema>;
-export type Effectiveness = z.infer<typeof effectivenessSchema>;
+export type EffectivenessResponse = z.infer<typeof effectivenessResponseSchema>;

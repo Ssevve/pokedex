@@ -7,7 +7,7 @@ import { Characteristics } from './components/Characteristics';
 import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
 import { useDetailedPokemon } from './useDetailedPokemon';
-// import { Effectiveness } from './components/Effectiveness';
+import { Effectiveness } from './components/Effectiveness';
 
 type PokemonPageParams = {
   pokemon: string;
@@ -35,8 +35,6 @@ export function PokemonPage() {
       effectiveness,
     } = data;
 
-    console.log(effectiveness);
-
     const mainType = types[0];
 
     return (
@@ -49,19 +47,20 @@ export function PokemonPage() {
           flavorTexts={flavorTexts}
           mainType={mainType}
         />
-        <Characteristics
-          baseHappiness={baseHappiness}
-          captureRate={captureRate}
-          habitat={habitat}
-          height={height}
-          mainType={mainType}
-          shape={shape}
-          weight={weight}
-        />
-        <div>
-          <BaseStats stats={stats} mainType={mainType} />
-          {/* <Effectiveness types={types} /> */}
+        <div className={styles.sectionsWrapper}>
+          <Characteristics
+            baseHappiness={baseHappiness}
+            captureRate={captureRate}
+            habitat={habitat}
+            height={height}
+            mainType={mainType}
+            shape={shape}
+            weight={weight}
+          />
+          <Effectiveness type={mainType} effectiveness={effectiveness} />
         </div>
+        <BaseStats stats={stats} mainType={mainType} />
+
         <EvolutionChain evolutionChain={evolutionChain} />
       </Main>
     );
