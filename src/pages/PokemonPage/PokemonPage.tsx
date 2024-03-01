@@ -57,7 +57,7 @@ export function PokemonPage() {
             shape={shape}
             weight={weight}
           />
-          <Effectiveness type={mainType} effectiveness={effectiveness} />
+          <Effectiveness effectiveness={effectiveness} />
         </div>
         <BaseStats stats={stats} mainType={mainType} />
 

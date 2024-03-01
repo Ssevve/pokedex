@@ -7,9 +7,9 @@ interface SectionProps extends ComponentProps<'section'> {
   className?: string;
 }
 
-export function Section({ title, className, children, ...rest }: SectionProps) {
+export function Section({ title, className = '', children, ...rest }: SectionProps) {
   return (
-    <section className={clsx(styles.section, className || '')} {...rest}>
+    <section className={clsx(styles.section, className)} {...rest}>
       <h2 className={styles.title}>{title}</h2>
       {children}
     </section>

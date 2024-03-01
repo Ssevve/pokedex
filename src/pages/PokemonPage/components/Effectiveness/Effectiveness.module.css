@@ -1,18 +1,28 @@
+@value medium from '@/styles/breakpoints';
+
 .wrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
   gap: 1rem;
   height: 100%;
 }
 
 .multipliersWrapper {
   border: 2px solid var(--gray);
-  padding: 1rem 1rem 1rem 1.5rem;
+  padding: 1rem;
   border-radius: var(--border-radius);
   position: relative;
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 175px;
   flex: 1;
+  margin-top: 0.5rem;
+}
+
+.multiplierSection h3 {
+  text-align: center;
 }
 
 .multipliersWrapper::before,
@@ -20,12 +30,25 @@
   --size: 2rem;
   content: '';
   position: absolute;
-  left: calc((var(--size) / 2) * -1);
   height: var(--size);
   aspect-ratio: 1;
   background: var(--off-white);
-  top: 50%;
-  translate: 0 -50%;
+  top: calc((var(--size) / 2) * -1);
+  left: 50%;
+  translate: -50% 0;
+}
+
+.multipliersWrapper::before,
+.multipliersWrapper::after {
+  --size: 2rem;
+  content: '';
+  position: absolute;
+  height: var(--size);
+  aspect-ratio: 1;
+  background: var(--off-white);
+  top: calc((var(--size) / 2) * -1);
+  left: 50%;
+  translate: -50% 0;
 }
 
 .multipliersWrapper::before {
@@ -51,19 +74,58 @@
 .multiplierSection {
   font-size: 0.8rem;
   display: grid;
+  align-items: center;
+  align-content: center;
   row-gap: 0.5rem;
+  padding: 1rem;
+  width: 100%;
+  flex: 1;
+}
+
+.multiplierSection h3 {
+  text-align: center;
 }
 
 .multipliersWrapper h3 {
   color: var(--dark-gray);
 }
 
-.multiplierSection+.multiplierSection {
-  margin-top: 1.25rem;
+.multiplierSection:nth-child(odd) {
+  background: var(--light-gray);
+}
+
+.multiplierSection {
+  border: 1px solid var(--light-gray);
+}
+
+.multiplierSection:first-child {
+  border-top-right-radius: var(--border-radius);
+  border-top-left-radius: var(--border-radius);
+}
+
+.multiplierSection:last-child {
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
 }
 
 .types {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  justify-content: center;
+}
+
+.badge {
+  flex-basis: 73px;
+  text-align: center;
+}
+
+@media medium {
+  .wrapper {
+    flex-direction: row;
+  }
+
+  .multipliersWrapper {
+    width: 50%;
+  }
 }
