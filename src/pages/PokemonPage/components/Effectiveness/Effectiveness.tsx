@@ -19,11 +19,11 @@ export function Effectiveness({ effectiveness }: EffectivenessProps) {
 
   return (
     <Section title="Effectiveness">
-      <div className={styles.wrapper}>
-        <section className={clsx(styles.multipliersWrapper, styles.offense)}>
+      <div className={styles.sides}>
+        <section className={clsx(styles.sideWrapper, styles.offense)}>
           {offenseEntries.map(([multiplier, types]) => {
             return (
-              <div key={`offense-${multiplier}`} className={styles.multiplierSection}>
+              <div key={`offense-${multiplier}`} className={styles.multiplierWrapper}>
                 <h3>Deals {multiplier}x to:</h3>
                 <div className={styles.types}>
                   <TypeBadges types={types} />
@@ -33,10 +33,10 @@ export function Effectiveness({ effectiveness }: EffectivenessProps) {
           })}
         </section>
 
-        <section className={clsx(styles.multipliersWrapper, styles.defense)}>
+        <section className={clsx(styles.sideWrapper, styles.defense)}>
           {defenseEntries.map(([multiplier, types]) => {
             return (
-              <div key={`defense-${multiplier}`} className={styles.multiplierSection}>
+              <div key={`defense-${multiplier}`} className={styles.multiplierWrapper}>
                 <h3>Takes {multiplier}x from:</h3>
                 <div className={styles.types}>
                   <TypeBadges types={types} />

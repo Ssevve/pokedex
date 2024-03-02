@@ -47,18 +47,16 @@ export function PokemonPage() {
           flavorTexts={flavorTexts}
           mainType={mainType}
         />
-        <div className={styles.sectionsWrapper}>
-          <Characteristics
-            baseHappiness={baseHappiness}
-            captureRate={captureRate}
-            habitat={habitat}
-            height={height}
-            mainType={mainType}
-            shape={shape}
-            weight={weight}
-          />
-          <Effectiveness effectiveness={effectiveness} />
-        </div>
+        <Characteristics
+          baseHappiness={baseHappiness}
+          captureRate={captureRate}
+          habitat={habitat}
+          height={height}
+          mainType={mainType}
+          shape={shape}
+          weight={weight}
+        />
+        <Effectiveness effectiveness={effectiveness} />
         <BaseStats stats={stats} mainType={mainType} />
 
         <EvolutionChain evolutionChain={evolutionChain} />
