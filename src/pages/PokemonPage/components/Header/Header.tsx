@@ -1,5 +1,4 @@
 import { Section } from '@/components/Section';
-import { POKEMON_TYPE_COLORS } from '@/constants';
 import { padPokemonId } from '@/utils';
 import styles from './Header.module.css';
 import { Badge } from '@/components/Badge';
@@ -28,18 +27,15 @@ interface HeaderProps {
   name: string;
   id: number;
   flavorTexts: Array<string>;
-  mainType: string;
+  typeColor: string;
 }
 
-export function Header({ types, sprite, name, id, flavorTexts, mainType }: HeaderProps) {
+export function Header({ types, sprite, name, id, flavorTexts, typeColor }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.baseInfo}>
         <div className={styles.spriteWrapper}>
-          <div
-            className={styles.spriteBackground}
-            style={{ '--bg-color': POKEMON_TYPE_COLORS[mainType] }}
-          />
+          <div className={styles.spriteBackground} style={{ '--bg-color': typeColor }} />
           <img width={250} height={250} className={styles.sprite} src={sprite} alt={name} />
         </div>
         <div>
@@ -49,7 +45,7 @@ export function Header({ types, sprite, name, id, flavorTexts, mainType }: Heade
           </div>
           <div className={styles.types}>
             {types.map((type) => (
-              <Badge key={type} backgroundColor={POKEMON_TYPE_COLORS[type]} text={type} />
+              <Badge key={type} backgroundColor={typeColor} text={type} />
             ))}
           </div>
         </div>

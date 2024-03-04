@@ -1,11 +1,10 @@
 import { Section } from '@/components/Section';
-import { POKEMON_TYPE_COLORS } from '@/constants';
 import { Stat } from '@/services/pokeAPI';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { convertStatValueToPercentage } from '../../utils';
 import styles from './BaseStats.module.css';
-import { forwardRef } from 'react';
 
 const statDisplayNames: Record<string, string> = {
   hp: 'hp',
@@ -18,15 +17,13 @@ const statDisplayNames: Record<string, string> = {
 
 interface BaseStatsProps {
   stats: Array<Stat>;
-  mainType: string;
+  typeColor: string;
 }
 
-export function BaseStats({ stats, mainType }: BaseStatsProps) {
+export function BaseStats({ stats, typeColor }: BaseStatsProps) {
   const [inViewRef, isInView] = useInView({
     triggerOnce: true,
   });
-
-  const statColor = POKEMON_TYPE_COLORS[mainType];
 
   return (
     <Section title="Base Stats">
@@ -34,7 +31,7 @@ export function BaseStats({ stats, mainType }: BaseStatsProps) {
         <tbody>
           {stats.map(({ name, value }, i) => (
             <Stat
-              fillColor={statColor}
+              fillColor={typeColor}
               name={statDisplayNames[name]}
               value={value}
               isInView={isInView}

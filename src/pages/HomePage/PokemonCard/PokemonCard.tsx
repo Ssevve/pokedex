@@ -13,8 +13,9 @@ interface PokemonCardProps {
 
 export function PokemonCard({ name, sprite, types, id }: PokemonCardProps) {
   const mainType = types[0];
+  const mainTypeColor = POKEMON_TYPE_COLORS[mainType];
   return (
-    <div className={styles.card} style={{ '--bg-color': POKEMON_TYPE_COLORS[mainType] }}>
+    <div className={styles.card} style={{ '--bg-color': mainTypeColor }}>
       <Link className={styles.link} to={`/${id}`}>
         <img className={styles.sprite} src={sprite} alt={name} />
         <div className={styles.info}>

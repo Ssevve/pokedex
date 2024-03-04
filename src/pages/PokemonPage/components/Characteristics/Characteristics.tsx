@@ -14,7 +14,7 @@ function convertDecimetersToMeters(decimeters: number) {
 }
 
 interface CharacteristicsProps {
-  mainType: string;
+  typeColor: string;
   weight: number;
   height: number;
   captureRate: number;
@@ -24,28 +24,28 @@ interface CharacteristicsProps {
 }
 
 export function Characteristics({
-  mainType,
   weight,
   height,
   captureRate,
+  typeColor,
   baseHappiness,
 }: CharacteristicsProps) {
   return (
     <Section title="Characteristics">
       <div className={styles.characteristics}>
-        <Characteristic icon={WeightIcon} title="Weight" type={mainType}>
+        <Characteristic icon={WeightIcon} title="Weight" iconColor={typeColor}>
           {`${convertHectogramsToKilograms(weight)}kg`}
         </Characteristic>
 
-        <Characteristic icon={MoveVerticalIcon} title="Height" type={mainType}>
+        <Characteristic icon={MoveVerticalIcon} title="Height" iconColor={typeColor}>
           {`${convertDecimetersToMeters(height)}m`}
         </Characteristic>
 
-        <Characteristic icon={PercentCircleIcon} title="Catch Rate" type={mainType}>
+        <Characteristic icon={PercentCircleIcon} title="Catch Rate" iconColor={typeColor}>
           {`${convertStatValueToPercentage(captureRate)}%`}
         </Characteristic>
 
-        <Characteristic icon={SmileIcon} title="Happiness" type={mainType}>
+        <Characteristic icon={SmileIcon} title="Happiness" iconColor={typeColor}>
           {baseHappiness} / {MAX_POKEMON_STAT_VALUE}
         </Characteristic>
       </div>
