@@ -30,7 +30,7 @@ export function BaseStats({ stats, typeColor }: BaseStatsProps) {
       <table className={styles.table}>
         <tbody>
           {stats.map(({ name, value }, i) => (
-            <Stat
+            <StatMeter
               fillColor={typeColor}
               name={statDisplayNames[name]}
               value={value}
@@ -51,7 +51,7 @@ interface StatProps {
   fillColor: string;
 }
 
-const Stat = forwardRef<HTMLDivElement, StatProps>(
+const StatMeter = forwardRef<HTMLDivElement, StatProps>(
   ({ name, value, isInView, fillColor }, inViewRef) => {
     return (
       <tr key={name}>
