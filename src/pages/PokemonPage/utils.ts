@@ -1,5 +1,10 @@
 import { MAX_POKEMON_STAT_VALUE } from '@/constants';
-import { EvolutionChain, FlavorTextEntries, PokemonType } from '@/services/pokeAPI';
+import {
+  EvolutionChain,
+  PokemonType,
+  EffectivenessResponse,
+  FlavorTextEntry,
+} from '@/services/pokeAPI';
 import {
   EffectivenessKey,
   EffectivenessKeyPrefix,
@@ -8,18 +13,18 @@ import {
   ParsedTypeEffectiveness,
   TypeEffectiveness,
 } from './types';
-import { EffectivenessResponse } from '@/services/pokeAPI/types';
+import { Ability } from '@/services/pokeAPI/types';
 
 export function convertStatValueToPercentage(value: number) {
   return ((value / MAX_POKEMON_STAT_VALUE) * 100).toFixed(1);
 }
 
-export function extractIdFromUrl(url: string) {
+export function getIdFromUrl(url: string) {
   const match = url.match(/\/(\d+)\//);
   return match ? match[1] : '';
 }
 
-export function getEnglishFlavorTexts(entries: FlavorTextEntries) {
+export function getEnglishFlavorTexts(entries: Array<FlavorTextEntry>) {
   return [
     ...new Set(
       entries.filter(({ language }) => language.name === 'en').map((text) => text.flavor_text),
@@ -33,6 +38,13 @@ export function getPokemonImageById(id: string) {
   return `${baseURL}/${id}.png`;
 }
 
+export function populateAbilityIsHidden(ability: Ability, isHidden: boolean) {
+  return {
+    ...ability,
+    isHidden,
+  };
+}
+
 export function normalizeEvolutionChain(
   evolutionChain: EvolutionChain,
 ): Array<NormalizedEvolution> {
@@ -41,8 +53,8 @@ export function normalizeEvolutionChain(
   if (!evolves_to.length) return [];
 
   const evolutions = evolves_to.reduce<Array<NormalizedEvolution>>((chain, evolution) => {
-    const fromId = extractIdFromUrl(species.url);
-    const toId = extractIdFromUrl(evolution.species.url);
+    const fromId = getIdFromUrl(species.url);
+    const toId = getIdFromUrl(evolution.species.url);
 
     return [
       ...chain,

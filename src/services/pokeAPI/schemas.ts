@@ -1,12 +1,13 @@
 import { z } from 'zod';
 import { EvolutionChain } from './types';
+import { getEnglishAbilityDescription } from './utils';
 
 export const namedPokeAPIResourceSchema = z.object({
   name: z.string(),
   url: z.string(),
 });
 
-export const pokemonPageSchema = z.object({
+export const paginatedPokemonSchema = z.object({
   next: z.string().url().nullable(),
   results: z.array(namedPokeAPIResourceSchema),
 });
@@ -34,6 +35,12 @@ export const rawPokemonSchema = z.object({
       stat: namedPokeAPIResourceSchema,
     }),
   ),
+  abilities: z.array(
+    z.object({
+      ability: namedPokeAPIResourceSchema,
+      is_hidden: z.boolean(),
+    }),
+  ),
 });
 
 export const pokemonSchema = rawPokemonSchema.transform(({ sprites, types, stats, ...rest }) => ({
@@ -46,18 +53,16 @@ export const pokemonSchema = rawPokemonSchema.transform(({ sprites, types, stats
   ...rest,
 }));
 
-export const flavorTextEntriesSchema = z.array(
-  z.object({
-    flavor_text: z.string(),
-    language: namedPokeAPIResourceSchema,
-    version: namedPokeAPIResourceSchema,
-  }),
-);
+export const flavorTextEntrySchema = z.object({
+  flavor_text: z.string(),
+  language: namedPokeAPIResourceSchema,
+  version: namedPokeAPIResourceSchema,
+});
 
 const rawSpeciesSchema = z.object({
   shape: namedPokeAPIResourceSchema,
   base_happiness: z.number(),
-  flavor_text_entries: flavorTextEntriesSchema,
+  flavor_text_entries: z.array(flavorTextEntrySchema),
   capture_rate: z.number(),
   habitat: namedPokeAPIResourceSchema.nullable(),
   evolution_chain: z.object({
@@ -104,4 +109,29 @@ export const pokemonTypeSchema = rawPokemonTypeSchema.transform(({ damage_relati
   ...damage_relations,
 }));
 
-export const effectivenessSchema = z.array(pokemonTypeSchema);
+export const effectivenessResponseSchema = z.array(pokemonTypeSchema);
+
+// export const abilityResponseSchema = z.object({
+//   name: z.string(),
+//   effect_entries: z.array(
+//     z.object({
+//       short_effect: z.string(),
+//       language: namedPokeAPIResourceSchema,
+//     }),
+//   ),
+// });
+
+export const rawAbilitySchema = z.object({
+  name: z.string(),
+  effect_entries: z.array(
+    z.object({
+      short_effect: z.string(),
+      language: namedPokeAPIResourceSchema,
+    }),
+  ),
+});
+
+export const abilitySchema = rawAbilitySchema.transform(({ name, effect_entries }) => ({
+  name,
+  description: getEnglishAbilityDescription(effect_entries) || 'Ability description not available',
+}));

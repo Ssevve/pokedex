@@ -5,6 +5,11 @@
   height: 100vh;
 }
 
+.doubleSectionWrapper {
+  display: 'flex';
+  gap: 1rem;
+}
+
 @media large {
   .sectionsWrapper {
     display: flex;

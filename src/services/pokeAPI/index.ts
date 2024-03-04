@@ -1,2 +1,8 @@
 export * from './pokeAPI';
-export type { Effectiveness, EvolutionChain, FlavorTextEntries, PokemonType, Stat } from './types';
+export type {
+  EffectivenessResponse,
+  EvolutionChain,
+  FlavorTextEntry,
+  PokemonType,
+  Stat,
+} from './types';

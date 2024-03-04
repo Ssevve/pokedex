@@ -2,21 +2,21 @@ import { POKEMONS_PER_PAGE } from '@/constants';
 import * as pokeAPI from '@/services/pokeAPI/pokeAPI';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-export function usePokemonPage() {
+export function usePaginatedPokemon() {
   return useInfiniteQuery({
     initialPageParam: 0,
     queryKey: ['pokemons'],
     queryFn: async ({ pageParam = 0 }) => {
-      const pokemonPage = await pokeAPI.getPokemonPage(pageParam);
+      const paginatedPokemon = await pokeAPI.getPaginatedPokemon(pageParam);
 
       const pokemons = await Promise.all(
-        pokemonPage.results.map(({ name }) => {
+        paginatedPokemon.results.map(({ name }) => {
           return pokeAPI.getPokemon(name);
         }),
       );
 
       return {
-        next: pokemonPage.next,
+        next: paginatedPokemon.next,
         results: pokemons,
       };
     },

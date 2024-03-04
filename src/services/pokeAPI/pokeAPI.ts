@@ -1,7 +1,8 @@
 import { POKEMONS_PER_PAGE } from '@/constants';
 import {
+  abilitySchema,
   evolutionChainDataSchema,
-  pokemonPageSchema,
+  paginatedPokemonSchema,
   pokemonSchema,
   pokemonTypeSchema,
   speciesSchema,
@@ -15,6 +16,7 @@ const urls = {
   species: 'pokemon-species',
   evolutionChain: 'evolution-chain',
   type: 'type',
+  ability: 'ability',
 } as const;
 
 export const client = async (endpoint: string) => {
@@ -30,10 +32,10 @@ export const client = async (endpoint: string) => {
   return res.json();
 };
 
-export async function getPokemonPage(pageParam: number, perPage: number = POKEMONS_PER_PAGE) {
+export async function getPaginatedPokemon(pageParam: number, perPage: number = POKEMONS_PER_PAGE) {
   const endpoint = `/${urls.page}?limit=${perPage}&offset=${pageParam}`;
   const res = await client(endpoint);
-  return pokemonPageSchema.parse(res);
+  return paginatedPokemonSchema.parse(res);
 }
 
 // `pokemon` param can be a Pokemon ID or a Pokemon name.
@@ -60,4 +62,11 @@ export async function getTypeByName(name: string) {
   const endpoint = `/${urls.type}/${name}`;
   const res = await client(endpoint);
   return pokemonTypeSchema.parse(res);
+}
+
+export async function getAbilityById(id: string) {
+  const endpoint = `/${urls.ability}/${id}`;
+  const res = await client(endpoint);
+  console.log(res);
+  return abilitySchema.parse(res);
 }

@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './HomePage.module.css';
 import { PokemonCard } from './PokemonCard';
-import { usePokemonPage } from './usePokemonPage';
+import { usePaginatedPokemon } from './usePaginatedPokemon';
 import { Main } from '@/components/Main';
 
 export function HomePage() {
-  const { data, isLoading, isFetchingNextPage, fetchNextPage } = usePokemonPage();
+  const { data, isLoading, isFetchingNextPage, fetchNextPage } = usePaginatedPokemon();
   const [inViewRef, isInView] = useInView();
 
   const pokemonList = data?.pages.flatMap((page) => page.results) || [];

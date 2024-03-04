@@ -1,4 +1,4 @@
-import { combineTypeEffectiveness } from './utils';
+import { combineTypeEffectiveness, populateAbilityIsHidden } from './utils';
 
 interface NormalizedEvolutionPokemon {
   name: string;
@@ -16,3 +16,4 @@ export type EffectivenessKey = `${EffectivenessKeyPrefix}_damage_${Effectiveness
 export type TypeEffectiveness = Record<string, number>;
 export type ParsedTypeEffectiveness = Record<'offense' | 'defense', TypeEffectiveness>;
 export type PokemonEffectiveness = ReturnType<typeof combineTypeEffectiveness>;
+export type AbilityWithIsHidden = ReturnType<typeof populateAbilityIsHidden>;
