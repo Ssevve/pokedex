@@ -1,9 +1,4 @@
-@value medium from '@/styles/breakpoints';
-
-.baseStats {
-  display: grid;
-  gap: 0.75rem;
-}
+@value small from '@/styles/breakpoints';
 
 .table {
   width: 100%;
@@ -67,10 +62,4 @@
   100% {
     max-width: auto;
   }
-}
-
-@media medium {
-  /* .baseStats {
-    width: 50%;
-  } */
 }

@@ -1,4 +1,4 @@
-@value large from '@/styles/breakpoints';
+@value medium from '@/styles/breakpoints';
 
 .loaderWrapper {
   place-items: center;
@@ -10,8 +10,8 @@
   gap: 1rem;
 }
 
-@media large {
-  .sectionsWrapper {
+@media medium {
+  .doubleSectionWrapper {
     display: flex;
     gap: 1rem;
   }

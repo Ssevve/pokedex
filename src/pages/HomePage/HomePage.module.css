@@ -1,4 +1,4 @@
-@value medium, large from '@/styles/breakpoints';
+@value small, large from '@/styles/breakpoints';
 
 .list {
   display: grid;
@@ -23,7 +23,7 @@
   height: 100%;
 }
 
-@media medium {
+@media small {
   .list {
     grid-template-columns: repeat(2, 1fr);
   }

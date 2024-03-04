@@ -1,4 +1,4 @@
-@value medium, large from '@/styles/breakpoints';
+@value small, large from '@/styles/breakpoints';
 
 .header {
   display: grid;
@@ -62,7 +62,7 @@
   margin: 0;
 }
 
-@media medium {
+@media small {
   .baseInfo {
     align-items: center;
     justify-content: center;

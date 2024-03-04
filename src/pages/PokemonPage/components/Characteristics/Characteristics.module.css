@@ -1,4 +1,4 @@
-@value medium from '@/styles/breakpoints';
+@value small from '@/styles/breakpoints';
 
 .characteristics {
   display: grid;
@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-@media medium {
+@media small {
   .characteristics {
     grid-template-columns: repeat(2, 1fr);
   }

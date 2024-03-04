@@ -111,21 +111,11 @@ export const pokemonTypeSchema = rawPokemonTypeSchema.transform(({ damage_relati
 
 export const effectivenessResponseSchema = z.array(pokemonTypeSchema);
 
-// export const abilityResponseSchema = z.object({
-//   name: z.string(),
-//   effect_entries: z.array(
-//     z.object({
-//       short_effect: z.string(),
-//       language: namedPokeAPIResourceSchema,
-//     }),
-//   ),
-// });
-
 export const rawAbilitySchema = z.object({
   name: z.string(),
   effect_entries: z.array(
     z.object({
-      short_effect: z.string(),
+      effect: z.string(),
       language: namedPokeAPIResourceSchema,
     }),
   ),

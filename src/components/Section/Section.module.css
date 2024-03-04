@@ -1,9 +1,10 @@
-@value medium from '@/styles/breakpoints';
+@value small from '@/styles/breakpoints';
 
 .section {
   display: flex;
   text-align: center;
   flex-direction: column;
+  justify-content: space-evenly;
   row-gap: 0.5rem;
   margin-top: 2rem;
   width: 100%;
@@ -15,7 +16,7 @@
   word-spacing: 0.2rem;
 }
 
-@media medium {
+@media small {
   .section {
     text-align: left;
   }

@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useInView } from 'react-intersection-observer';
 import { convertStatValueToPercentage } from '../../utils';
 import styles from './BaseStats.module.css';
+import { forwardRef } from 'react';
 
 const statDisplayNames: Record<string, string> = {
   hp: 'hp',
@@ -25,30 +26,53 @@ export function BaseStats({ stats, mainType }: BaseStatsProps) {
     triggerOnce: true,
   });
 
+  const statColor = POKEMON_TYPE_COLORS[mainType];
+
   return (
-    <Section title="Base Stats" className={styles.baseStats}>
+    <Section title="Base Stats">
       <table className={styles.table}>
         <tbody>
-          {stats.map((stat, i) => (
-            <tr key={stat.name}>
-              <th className={styles.statLabel}>{statDisplayNames[stat.name]}</th>
-              <td>
-                <div className={styles.statTrack}>
-                  <div
-                    ref={i === 0 ? inViewRef : null}
-                    className={clsx(styles.statTrackFill, isInView && styles.animateGrowStat)}
-                    style={{
-                      '--bg-color': POKEMON_TYPE_COLORS[mainType],
-                      maxWidth: isInView ? convertStatValueToPercentage(stat.value) + '%' : 0,
-                    }}
-                  />
-                  <div className={styles.statTrackValue}>{stat.value}</div>
-                </div>
-              </td>
-            </tr>
+          {stats.map(({ name, value }, i) => (
+            <Stat
+              fillColor={statColor}
+              name={statDisplayNames[name]}
+              value={value}
+              isInView={isInView}
+              ref={i === 0 ? inViewRef : null}
+            />
           ))}
         </tbody>
       </table>
     </Section>
   );
 }
+
+interface StatProps {
+  name: string;
+  value: number;
+  isInView: boolean;
+  fillColor: string;
+}
+
+const Stat = forwardRef<HTMLDivElement, StatProps>(
+  ({ name, value, isInView, fillColor }, inViewRef) => {
+    return (
+      <tr key={name}>
+        <th className={styles.statLabel}>{name}</th>
+        <td>
+          <div className={styles.statTrack}>
+            <div
+              ref={inViewRef}
+              className={clsx(styles.statTrackFill, isInView && styles.animateGrowStat)}
+              style={{
+                '--bg-color': fillColor,
+                maxWidth: isInView ? convertStatValueToPercentage(value) + '%' : 0,
+              }}
+            />
+            <div className={styles.statTrackValue}>{value}</div>
+          </div>
+        </td>
+      </tr>
+    );
+  },
+);
