@@ -10,9 +10,9 @@ export function Abilities({ abilities }: AbilitiesProps) {
     <Section title="Abilities">
       {abilities.map(({ description, isHidden, name }) => (
         <div key={name}>
-          <h3>
+          <h2>
             {name} {isHidden ? '(hidden)' : null}
-          </h3>
+          </h2>
           <p>{description}</p>
         </div>
       ))}

@@ -16,8 +16,8 @@ export function Characteristic({ icon: Icon, type, title, children }: Characteri
       style={{ '--icon-color': POKEMON_TYPE_COLORS[type] } as CSSProperties}
     >
       <Icon width={40} height={40} aria-hidden />
-      <h3>{title}</h3>
-      <span>{children}</span>
+      <h2 className={styles.title}>{title}</h2>
+      <span className={styles.content}>{children}</span>
     </div>
   );
 }

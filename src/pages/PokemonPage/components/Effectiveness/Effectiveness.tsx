@@ -24,7 +24,7 @@ export function Effectiveness({ effectiveness }: EffectivenessProps) {
           {offenseEntries.map(([multiplier, types]) => {
             return (
               <div key={`offense-${multiplier}`} className={styles.multiplierWrapper}>
-                <h3>Deals {multiplier}x to:</h3>
+                <h2 className={styles.multiplierTitle}>Deals {multiplier}x to:</h2>
                 <div className={styles.types}>
                   <TypeBadges types={types} />
                 </div>
@@ -37,7 +37,7 @@ export function Effectiveness({ effectiveness }: EffectivenessProps) {
           {defenseEntries.map(([multiplier, types]) => {
             return (
               <div key={`defense-${multiplier}`} className={styles.multiplierWrapper}>
-                <h3>Takes {multiplier}x from:</h3>
+                <h2 className={styles.multiplierTitle}>Takes {multiplier}x from:</h2>
                 <div className={styles.types}>
                   <TypeBadges types={types} />
                 </div>

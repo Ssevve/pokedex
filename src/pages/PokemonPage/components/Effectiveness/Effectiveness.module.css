@@ -71,7 +71,8 @@
   background: var(--light-gray);
 }
 
-.multiplierWrapper h3 {
+.multiplierTitle {
+  font-size: 1rem;
   text-align: center;
 }
 
