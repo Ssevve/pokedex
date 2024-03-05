@@ -5,11 +5,11 @@
 }
 
 .spriteWrapper {
-  max-width: 250px;
-  width: 100%;
+  width: 250px;
   margin: 0 auto;
   position: relative;
   flex-grow: 0;
+  margin-bottom: 1rem;
 }
 
 .sprite {
@@ -29,10 +29,7 @@
   border-radius: 50%;
 }
 
-.baseInfo {
-  margin: 0 auto;
-}
-
+.baseInfo,
 .pokemonStatus {
   margin: 0 auto;
 }
@@ -73,6 +70,10 @@
     justify-content: center;
     display: flex;
     gap: 1rem;
+  }
+
+  .spriteWrapper {
+    margin-bottom: 0;
   }
 
   .pokemonStatus {
