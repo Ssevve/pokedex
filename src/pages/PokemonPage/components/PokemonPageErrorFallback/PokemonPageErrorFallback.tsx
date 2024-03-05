@@ -1,6 +1,6 @@
+import { Button } from '@/components/Button';
 import { Main } from '@/components/Main';
-import clsx from 'clsx';
-import { MoveLeftIcon, RefreshCcwIcon } from 'lucide-react';
+import { HomeIcon, RefreshCcwIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import styles from './PokemonPageErrorFallback.module.css';
 
@@ -15,14 +15,10 @@ export function PokemonPageErrorFallback({ refetch }: PokemonPageErrorFallbackPr
         <h1>Oh no!</h1>
         <p>Something went wrong!</p>
         <div className={styles.actions}>
-          <Link to="/" className={clsx(styles.button, styles.homeLink)}>
-            <MoveLeftIcon />
-            <span>Home page</span>
+          <Link to="/">
+            <Button icon={HomeIcon} label="Home page" />
           </Link>
-          <button onClick={refetch} className={clsx(styles.button, styles.retryButton)}>
-            <RefreshCcwIcon />
-            <span>Try again</span>
-          </button>
+          <Button icon={RefreshCcwIcon} label="Try again" variant="secondary" onClick={refetch} />
         </div>
       </div>
     </Main>

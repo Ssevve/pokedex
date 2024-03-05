@@ -1,11 +1,11 @@
+import { App } from '@/components/App';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'normalize.css';
+import '@/styles/globals.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { queryClient } from './config/queryClient';
-import '@/styles/globals.css';
-import { App } from '@/components/App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

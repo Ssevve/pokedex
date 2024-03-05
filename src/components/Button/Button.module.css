@@ -1,0 +1,31 @@
+.button {
+  border: none;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color);
+  background: var(--background);
+  line-height: 1;
+}
+
+.primary {
+  background: var(--pokedex-red);
+  color: var(--light-gray);
+}
+
+.primary:hover {
+  background: var(--pokedex-red-hover);
+}
+
+.secondary {
+  background: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+.secondary:hover {
+  background: var(--light-gray-hover);
+}

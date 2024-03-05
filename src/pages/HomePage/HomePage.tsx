@@ -11,7 +11,6 @@ export function HomePage() {
   const [inViewRef, isInView] = useInView();
 
   const pokemonList = data?.pages.flatMap((page) => page.results) || [];
-
   const isLoadingPokemons = isLoading || isFetchingNextPage;
 
   useEffect(() => {
