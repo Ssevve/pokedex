@@ -31,6 +31,7 @@ export function BaseStats({ stats, typeColor }: BaseStatsProps) {
         <tbody>
           {stats.map(({ name, value }, i) => (
             <StatMeter
+              key={name}
               fillColor={typeColor}
               name={statDisplayNames[name]}
               value={value}
@@ -54,7 +55,7 @@ interface StatProps {
 const StatMeter = forwardRef<HTMLDivElement, StatProps>(
   ({ name, value, isInView, fillColor }, inViewRef) => {
     return (
-      <tr key={name}>
+      <tr>
         <th className={styles.statLabel}>{name}</th>
         <td>
           <div className={styles.statTrack}>

@@ -45,6 +45,8 @@ export function PokemonPage() {
     evolutionChain,
     effectiveness,
     abilities,
+    isLegendary,
+    isMythical,
   } = data;
 
   const mainType = types[0];
@@ -53,6 +55,8 @@ export function PokemonPage() {
   return (
     <Main>
       <Header
+        isLegendary={isLegendary}
+        isMythical={isMythical}
         id={id}
         name={name}
         sprite={sprite}

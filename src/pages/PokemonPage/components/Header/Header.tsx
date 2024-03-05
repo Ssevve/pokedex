@@ -2,6 +2,7 @@ import { Section } from '@/components/Section';
 import { padPokemonId } from '@/utils';
 import styles from './Header.module.css';
 import { Badge } from '@/components/Badge';
+import { POKEMON_TYPE_COLORS } from '@/constants';
 
 // Makes flavor text suitable for HTML presentation
 // https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
@@ -28,9 +29,22 @@ interface HeaderProps {
   id: number;
   flavorTexts: Array<string>;
   typeColor: string;
+  isLegendary: boolean;
+  isMythical: boolean;
 }
 
-export function Header({ types, sprite, name, id, flavorTexts, typeColor }: HeaderProps) {
+export function Header({
+  types,
+  sprite,
+  name,
+  id,
+  flavorTexts,
+  typeColor,
+  isLegendary,
+  isMythical,
+}: HeaderProps) {
+  const pokemonStatus = isLegendary ? 'Legendary' : isMythical ? 'Mythical' : null;
+
   return (
     <header className={styles.header}>
       <div className={styles.baseInfo}>
@@ -39,13 +53,16 @@ export function Header({ types, sprite, name, id, flavorTexts, typeColor }: Head
           <img width={250} height={250} className={styles.sprite} src={sprite} alt={name} />
         </div>
         <div>
-          <div className={styles.nameWrapper}>
-            <h1 className={styles.name}>{name}</h1>
-            <span className={styles.id}>#{padPokemonId(id)}</span>
+          <div>
+            {pokemonStatus && <Badge className={styles.pokemonStatus} text={pokemonStatus} />}
+            <div className={styles.nameWrapper}>
+              <h1 className={styles.name}>{name}</h1>
+              <span className={styles.id}>#{padPokemonId(id)}</span>
+            </div>
           </div>
           <div className={styles.types}>
             {types.map((type) => (
-              <Badge key={type} backgroundColor={typeColor} text={type} />
+              <Badge key={type} backgroundColor={POKEMON_TYPE_COLORS[type]} text={type} />
             ))}
           </div>
         </div>

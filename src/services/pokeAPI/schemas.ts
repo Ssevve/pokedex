@@ -61,6 +61,8 @@ export const flavorTextEntrySchema = z.object({
 
 const rawSpeciesSchema = z.object({
   shape: namedPokeAPIResourceSchema,
+  is_legendary: z.boolean(),
+  is_mythical: z.boolean(),
   base_happiness: z.number(),
   flavor_text_entries: z.array(flavorTextEntrySchema),
   capture_rate: z.number(),
@@ -71,11 +73,21 @@ const rawSpeciesSchema = z.object({
 });
 
 export const speciesSchema = rawSpeciesSchema.transform(
-  ({ flavor_text_entries, capture_rate, habitat, base_happiness, ...rest }) => ({
+  ({
+    flavor_text_entries,
+    capture_rate,
+    habitat,
+    base_happiness,
+    is_legendary,
+    is_mythical,
+    ...rest
+  }) => ({
     flavorTexts: flavor_text_entries,
     captureRate: capture_rate,
     habitat: habitat?.name || null,
     baseHappiness: base_happiness,
+    isLegendary: is_legendary,
+    isMythical: is_mythical,
     ...rest,
   }),
 );

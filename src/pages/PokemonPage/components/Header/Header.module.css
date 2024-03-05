@@ -33,8 +33,13 @@
   margin: 0 auto;
 }
 
+.pokemonStatus {
+  margin: 0 auto;
+}
+
 .nameWrapper {
   display: flex;
+  margin-top: 1rem;
   flex-wrap: wrap;
   column-gap: 0.5rem;
   align-items: baseline;
@@ -68,6 +73,10 @@
     justify-content: center;
     display: flex;
     gap: 1rem;
+  }
+
+  .pokemonStatus {
+    margin: 0;
   }
 
   .types {
