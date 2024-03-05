@@ -1,5 +1,6 @@
 import { Main } from '@/components/Main';
 import { PokeballLoader } from '@/components/PokeballLoader';
+import { POKEMON_TYPE_COLORS } from '@/constants';
 import { useParams } from 'react-router-dom';
 import styles from './PokemonPage.module.css';
 import { Abilities } from './components/Abilities';
@@ -8,8 +9,8 @@ import { Characteristics } from './components/Characteristics';
 import { Effectiveness } from './components/Effectiveness';
 import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
+import { PokemonPageErrorFallback } from './components/PokemonPageErrorFallback';
 import { useDetailedPokemon } from './useDetailedPokemon';
-import { POKEMON_TYPE_COLORS } from '@/constants';
 
 type PokemonPageParams = {
   pokemon: string;
@@ -17,7 +18,9 @@ type PokemonPageParams = {
 
 export function PokemonPage() {
   const { pokemon } = useParams() as PokemonPageParams;
-  const { data, isError } = useDetailedPokemon(pokemon.toLowerCase());
+  const { data, isError, refetch } = useDetailedPokemon(pokemon.toLowerCase());
+
+  if (isError) return <PokemonPageErrorFallback refetch={refetch} />;
 
   if (!data)
     return (
@@ -25,8 +28,6 @@ export function PokemonPage() {
         <PokeballLoader />
       </Main>
     );
-
-  if (isError) return <div>Oops!</div>;
 
   const {
     sprite,

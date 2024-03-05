@@ -7,7 +7,9 @@
   --dark-gray: #333333;
   --gray: #cccccc;
   --light-gray: #f5f5f5;
-  ;
+  --light-gray-hover: #f1f1f1;
+  --pokedex-red: #dc0a2d;
+  --pokedex-red-hover: #c70d2c;
 }
 
 *,
