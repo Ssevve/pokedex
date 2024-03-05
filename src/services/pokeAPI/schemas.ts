@@ -127,7 +127,7 @@ export const rawAbilitySchema = z.object({
   name: z.string(),
   effect_entries: z.array(
     z.object({
-      effect: z.string(),
+      short_effect: z.string(),
       language: namedPokeAPIResourceSchema,
     }),
   ),

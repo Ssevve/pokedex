@@ -67,6 +67,5 @@ export async function getTypeByName(name: string) {
 export async function getAbilityById(id: string) {
   const endpoint = `/${urls.ability}/${id}`;
   const res = await client(endpoint);
-  console.log(res);
   return abilitySchema.parse(res);
 }
