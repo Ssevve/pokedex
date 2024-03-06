@@ -12,7 +12,6 @@ export function HomePage() {
 
   const pokemonList = data?.pages.flatMap((page) => page.results) || [];
   const isLoadingPokemons = isLoading || isFetchingNextPage;
-
   useEffect(() => {
     if (isInView) fetchNextPage();
   }, [isInView, fetchNextPage]);
