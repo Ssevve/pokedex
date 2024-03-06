@@ -1,3 +1,4 @@
+import { ErrorFallback } from '@/components/ErrorFallback';
 import { Main } from '@/components/Main';
 import { PokeballLoader } from '@/components/PokeballLoader';
 import { POKEMON_TYPE_COLORS } from '@/constants';
@@ -9,7 +10,6 @@ import { Characteristics } from './components/Characteristics';
 import { Effectiveness } from './components/Effectiveness';
 import { EvolutionChain } from './components/EvolutionChain';
 import { Header } from './components/Header';
-import { PokemonPageErrorFallback } from './components/PokemonPageErrorFallback';
 import { useDetailedPokemon } from './useDetailedPokemon';
 
 type PokemonPageParams = {
@@ -20,7 +20,7 @@ export function PokemonPage() {
   const { pokemon } = useParams() as PokemonPageParams;
   const { data, isError, refetch } = useDetailedPokemon(pokemon.toLowerCase());
 
-  if (isError) return <PokemonPageErrorFallback refetch={refetch} />;
+  if (isError) return <ErrorFallback refetch={refetch} />;
 
   if (!data)
     return (
