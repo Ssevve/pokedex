@@ -7,7 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 export function App() {
   return (
     <BrowserRouter>
-      <ErrorBoundary fallbackRender={ErrorFallback}>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/:pokemon" element={<PokemonPage />} />
